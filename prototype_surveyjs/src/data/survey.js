@@ -1,9 +1,15 @@
 const SURVEY_DATA = { "title": "Tell us, what technologies do you use?", "pages": [
         { "name": "page1", "questions": [
+                {
+                    "type": "radiogroup", "choices": [
+                        "Yes",
+                        "No"
+                    ], "isRequired": true, "name": "skiptoend", "title": "Would you like to skip to the end?"
+                },
                 { "type": "radiogroup", "choices": [
                         "Yes",
                         "No"
-                    ], "isRequired": true, "name": "frameworkUsing","title": "Do you use any front-end framework like Bootstrap?"
+                    ], "isRequired": false, "name": "frameworkUsing","title": "Do you use any front-end framework like Bootstrap?"
                 },
                 { "type": "checkbox", "choices": [
                         "Bootstrap",
@@ -12,7 +18,7 @@ const SURVEY_DATA = { "title": "Tell us, what technologies do you use?", "pages"
                 }
             ]
         },
-        { "name": "page2", "questions": [
+        { "name": "page2", "visibleIf": "{skiptoend} = 'No'", "questions": [
                 { "type": "radiogroup", "choices": [
                         "Yes",
                         "No"
@@ -26,7 +32,7 @@ const SURVEY_DATA = { "title": "Tell us, what technologies do you use?", "pages"
                 }
             ]
         },
-        { "name": "page3","questions": [
+        { "name": "page3", "visibleIf": "{skiptoend} = 'No'", "questions": [
                 { "type": "comment", "name": "about", "title": "Please tell us about your main requirements for Survey library"
                 }
             ]

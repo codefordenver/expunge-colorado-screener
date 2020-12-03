@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Survey from'survey-react';
-import SURVEY_DATA from './data/survey.js';
+import SURVEY_DATA from '../data/survey.js';
 import { useState, useEffect, useRef } from 'react';
 
 function SurveyComponent() {
@@ -12,7 +12,7 @@ function SurveyComponent() {
 
     })
 
-    return  (
+    return  (        
         <Survey.Survey json={SURVEY_DATA} onComplete={sendDataToServer}/>
     );
 
