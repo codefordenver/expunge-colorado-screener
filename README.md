@@ -7,7 +7,7 @@ Screener for record sealing organization Expunge Colorado
 
 ## Local development
 ### Install dependencies
-`yarn start`
+`yarn`
 
 ### Run app
 `yarn start`
