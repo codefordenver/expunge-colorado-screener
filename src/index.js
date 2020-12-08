@@ -4,10 +4,10 @@ import SurveyComponent from './Components/SurveyComponent';
 import './App.css';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <div class='center-me'>
-      <SurveyComponent />
-    </div>
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <div className="center-me">
+            <SurveyComponent />
+        </div>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
