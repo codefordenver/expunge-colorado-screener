@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "husky": "^4.3.5",
+    "prettier": "^2.2.1",
+    "pretty-quick": "^3.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "^4.0.0",
@@ -7,6 +10,11 @@
   },
   "scripts": {
     "start": "react-scripts start"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
   },
   "browserslist": {
     "production": [
