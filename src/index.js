@@ -5,7 +5,7 @@ import './App.css';
 
 ReactDOM.render(
     <React.StrictMode>
-        <div class="center-me">
+        <div className="center-me">
             <SurveyComponent />
         </div>
     </React.StrictMode>,
