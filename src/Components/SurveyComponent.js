@@ -6,7 +6,7 @@ import useLocalStorage from '../hooks/useLocalStorage'
 
 function SurveyComponent() {
 
-    const [surveyData, setSurveyData] = useLocalStorage(Object.keys, Object.values)
+    const [surveyData, setSurveyData] = useLocalStorage('surveyData', null)
 
     function sendDataToServer(survey) {
         console.log(survey)
