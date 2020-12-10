@@ -6,17 +6,19 @@ import useLocalStorage from '../hooks/useLocalStorage'
 
 function SurveyComponent() {
 
+    const [surveyData, setSurveyData] = useLocalStorage(Object.keys, Object.values)
+
     function sendDataToServer(survey) {
         console.log(survey)
     }
 
-    function valueChanged(survey)  {
-        console.log(Object.keys(survey.data))
+    function persistDataToLocalStorage(survey)  {
+        setSurveyData(survey.data)
     }
 
     useEffect(() => {});
 
-    return <Survey.Survey json={SURVEY_DATA}   onValueChanged={valueChanged} onComplete={sendDataToServer} />;
+    return <Survey.Survey json={SURVEY_DATA}   onValueChanged={persistDataToLocalStorage} onComplete={sendDataToServer} />;
 }
 
 export default SurveyComponent;
