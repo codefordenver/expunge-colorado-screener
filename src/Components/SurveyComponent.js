@@ -2,15 +2,16 @@ import React from 'react';
 import * as Survey from 'survey-react';
 import SURVEY_DATA from '../data/survey.js';
 import { useState, useEffect, useRef } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage'
 
 function SurveyComponent() {
+
     function sendDataToServer(survey) {
-        console.log(survey.data);
-        console.log(Survey.Survey)
+        console.log(survey)
     }
 
-    function valueChanged()  {
-        console.log('page change')
+    function valueChanged(survey)  {
+        console.log(Object.keys(survey.data))
     }
 
     useEffect(() => {});
