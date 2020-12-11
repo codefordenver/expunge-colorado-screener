@@ -1,7 +1,31 @@
-.center-me {
-    position: fixed;
-    left: 33%;
-    top: 33%;
-    width: 33%;
-    background-color: orange;
+.app {
+    display: flex;
+    width: 100vw;
+    align-items: center;
+    flex-direction: column;
+    .center-me {
+    }
+}
+
+.btn-nav {
+    background-color: rgb(162, 139, 184);
+    border-radius: 5px;
+    border-width: 1px;
+    color: lightblue;
+}
+
+.btn-nav:hover {
+    background-color: rgb(133, 77, 185);
+}
+
+div.header {
+    color: rgb(162, 139, 184);
+}
+
+div.container {
+    background-color: lightblue;
+}
+
+h1 {
+    color: rgb(162, 139, 184);
 }

@@ -5,8 +5,11 @@ import './App.scss';
 
 ReactDOM.render(
     <React.StrictMode>
-        <div className="center-me">
-            <SurveyComponent />
+        <div className="app">
+            <h1>Expunge Colorado Screener</h1>
+            <div className="center-me">
+                <SurveyComponent />
+            </div>
         </div>
     </React.StrictMode>,
     document.getElementById('root')
