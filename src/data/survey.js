@@ -2,7 +2,7 @@ const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
     pages: [
         {
-            name: 'page1',
+            name: 'preliminaryQuestions',
             questions: [
                 {
                     type: 'radiogroup',
@@ -17,6 +17,7 @@ const SURVEY_DATA = {
                     isRequired: true,
                     name: 'coloradoArrest',
                     title: 'Did your arrest or charge take place in Colorado?',
+                    visibleIf: "{skipToEnd} = 'No'",
                 },
                 {
                     type: 'radiogroup',
@@ -28,18 +29,18 @@ const SURVEY_DATA = {
                 },
                 {
                     type: 'radiogroup',
-                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
+                    choices: ['Yes', 'No', 'Not Sure'],
                     isRequired: true,
-                    name: 'federalOrMunicipal',
-                    title: 'Was your case a federal or muncipal case?',
+                    name: 'federalCase',
+                    title: 'Was your case a federal case?',
                     visibleIf: "{over18} = 'Yes'",
                 },
             ],
         },
         {
-            name: 'page2',
+            name: 'sealingArrestsAndCharges',
             visibleIf:
-                "{skipToEnd} = 'No' and {coloradoArrest} = 'Yes' and {over18} = 'Yes' and {federalOrMunicipal} != 'Yes'",
+                "{skipToEnd} = 'No' and {coloradoArrest} = 'Yes' and {over18} = 'Yes' and {federalCase} = 'No'",
             questions: [
                 {
                     type: 'radiogroup',
@@ -51,7 +52,7 @@ const SURVEY_DATA = {
                 },
                 {
                     type: 'radiogroup',
-                    choices: ['Yes', 'No'],
+                    choices: ['Yes', 'No', 'Not Sure'],
                     isRequired: true,
                     name: 'chargeDismissedOrAcquitted',
                     title:
@@ -60,30 +61,69 @@ const SURVEY_DATA = {
                 },
                 {
                     type: 'radiogroup',
-                    choices: ['Ineligible Charge Type', "Don't Know/Not Sure"],
+                    choices: [
+                        'Eligible Charge Type',
+                        'Ineligible Charge Type',
+                        'Not Sure',
+                    ],
                     isRequired: true,
                     name: 'chargeToSeal',
-                    title: 'What charge are you looking to seal??',
-                    visibleIf: "{chargeDismissedOrAcquitted} = 'Yes'",
+                    title: 'What charge are you looking to seal?',
+                    visibleIf:
+                        "{chargeDismissedOrAcquitted} = 'No' or {chargeDismissedOrAcquitted} = 'Yes' ",
                 },
             ],
         },
         {
-            name: 'page3',
-            visibleIf: "{skipToEnd} = 'Yes'",
+            name: 'convictionRequirements',
+            visibleIf:
+                "{chargeToSeal} = 'Eligible Charge Type' and {chargeDismissedOrAcquitted} = 'No'",
             questions: [
                 {
-                    type: 'comment',
-                    name: 'about',
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', 'Not Sure'],
+                    isRequired: true,
+                    name: 'completedSentencing',
                     title:
-                        'Please tell us about your main requirements for Survey library',
+                        'If you were sentenced at the end of your case, have you completed all sentencing, including supervised or unsupervised probation, parole, community corrections, incarceration, etc?',
+                },
+                {
+                    type: 'radiogroup',
+                    choices: [
+                        'Enough Time Has Passed',
+                        'Not Enough Time Has Passed',
+                        'Not Sure',
+                    ],
+                    isRequired: true,
+                    name: 'enoughTimePassed',
+                    title:
+                        'What is the month & year of your conviction or release from supervision, whichever is later?',
+                    visibleIf: "{completedSentencing} = 'Yes'",
+                },
+                {
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', 'Not Sure'],
+                    isRequired: true,
+                    name: 'paidRestitutionAndFees',
+                    title:
+                        'Have you paid all restitution, fines, court costs, late fees or other fees ordered by the Court in your case?',
+                    visibleIf: "{enoughTimePassed} = 'Enough Time Has Passed'",
+                },
+                {
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', 'Not Sure'],
+                    isRequired: true,
+                    name: 'anyNewOffense',
+                    title:
+                        'Have you been convicted of or charged with another offense after the conviction you are trying to seal?',
+                    visibleIf: "{paidRestitutionAndFees} = 'Yes'",
                 },
             ],
         },
         {
-            name: 'page4',
+            name: 'ineligibleStatus',
             visibleIf:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalOrMunicipal} = 'Yes'",
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No'",
             questions: [
                 {
                     type: 'comment',
@@ -94,9 +134,22 @@ const SURVEY_DATA = {
             ],
         },
         {
-            name: 'page5',
+            name: 'additionalInfoRequired',
             visibleIf:
-                "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'Yes'",
+                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {enoughTimePassed} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
+            questions: [
+                {
+                    type: 'comment',
+                    name: 'about',
+                    title:
+                        'Given your responses, additional information will need to be collected to determine elibility. Please provide your contact information in the space below',
+                },
+            ],
+        },
+        {
+            name: 'eligibleStatus',
+            visibleIf:
+                "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'No'",
             questions: [
                 {
                     type: 'comment',
@@ -107,60 +160,14 @@ const SURVEY_DATA = {
             ],
         },
         {
-            name: 'page6',
-            visibleIf: "{chargeDismissedOrAcquitted} = 'No",
-            questions: [
-                {
-                    type: 'radiogroup',
-                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
-                    isRequired: true,
-                    name: 'completionOfSentencing',
-                    title:
-                        'If you were sentenced at the end of your case, have you completed all sentencing, including supervised or unsupervised probation, parole, community corrections, incarceration, etc?',
-                },
-                {
-                    type: 'radiogroup',
-                    choices: [
-                        'Enough Time Has Passed',
-                        'Not Enough Time Has Passed',
-                        "Don't Know/Not Sure",
-                    ],
-                    isRequired: true,
-                    name: 'sufficientPeriodOfTime',
-                    title:
-                        'What is the month & year of your conviction or release from supervision, whichever is later?',
-                    visibleIf: "{completionOfSentences} = 'Yes'",
-                },
-                {
-                    type: 'radiogroup',
-                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
-                    isRequired: true,
-                    name: 'paidRestitutionAndFees',
-                    title:
-                        'Have you paid all restitution, fines, court costs, late fees or other fees ordered by the Court in your case?',
-                    visibleIf: "{sufficientPeriodOfTime} = 'Enough Time Has Passed'",
-                },
-                {
-                    type: 'radiogroup',
-                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
-                    isRequired: true,
-                    name: 'anyNewOffense',
-                    title:
-                        'Have you been convicted of or charged with another offense after the conviction you are trying to seal?',
-                    visibleIf: "{paidRestitutionAndFees} = 'Yes'",
-                },
-            ],
-        },
-        {
-            name: 'page7',
-            visibleIf:
-                "{completionOfSentencing} != 'Yes' or {sufficientPeriodOfTime} != 'Enough Time Has Passed' or {paidRestitutionAndFees} != 'Yes' or {anyNewOffense} != 'Yes'",
+            name: 'skipToEnd',
+            visibleIf: "{skipToEnd} = 'Yes'",
             questions: [
                 {
                     type: 'comment',
                     name: 'about',
                     title:
-                        'Given your responses, additional information will need to be collected to determine elibility. Please provide your contact information in the space below',
+                        'Please tell us about your main requirements for Survey library',
                 },
             ],
         },
