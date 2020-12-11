@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://src/App.css"],"names":[],"mappings":"AAAA,WACI,cAAe,CACf,QAAS,CACT,OAAQ,CACR,SACJ","file":"main.f25870cc.chunk.css","sourcesContent":[".center-me {\n    position: fixed;\n    left: 33%;\n    top: 33%;\n    width: 33%;\n}\n"]}
