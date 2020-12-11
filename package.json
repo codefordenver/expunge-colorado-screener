@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "husky": "^4.3.5",
+    "node-sass": "4.14.1",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0",
     "react": "^17.0.1",
