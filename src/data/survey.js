@@ -53,10 +53,18 @@ const SURVEY_DATA = {
                     type: 'radiogroup',
                     choices: ['Yes', 'No'],
                     isRequired: true,
-                    name: 'caseDismissedOrAcquitted',
+                    name: 'chargeDismissedOrAcquitted',
                     title:
                         'Were all charges in your case dismissed or were you acquitted (found not guilty)?',
                     visibleIf: "{sealingArrestRecordOnly} = 'No'",
+                },
+                {
+                    type: 'radiogroup',
+                    choices: ['Ineligible Charge Type', "Don't Know/Not Sure"],
+                    isRequired: true,
+                    name: 'chargeToSeal',
+                    title: 'What charge are you looking to seal??',
+                    visibleIf: "{chargeDismissedOrAcquitted} = 'Yes'",
                 },
             ],
         },
@@ -88,13 +96,71 @@ const SURVEY_DATA = {
         {
             name: 'page5',
             visibleIf:
-                "{sealingArrestRecordOnly} = 'Yes' or {caseDismissedOrAcquitted} = 'Yes'",
+                "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'Yes'",
             questions: [
                 {
                     type: 'comment',
                     name: 'about',
                     title:
                         'Given your responses, your case is eligible for the services provided by Expunge Colorado. Please provide your contact information in the space below',
+                },
+            ],
+        },
+        {
+            name: 'page6',
+            visibleIf: "{chargeDismissedOrAcquitted} = 'No",
+            questions: [
+                {
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
+                    isRequired: true,
+                    name: 'completionOfSentencing',
+                    title:
+                        'If you were sentenced at the end of your case, have you completed all sentencing, including supervised or unsupervised probation, parole, community corrections, incarceration, etc?',
+                },
+                {
+                    type: 'radiogroup',
+                    choices: [
+                        'Enough Time Has Passed',
+                        'Not Enough Time Has Passed',
+                        "Don't Know/Not Sure",
+                    ],
+                    isRequired: true,
+                    name: 'sufficientPeriodOfTime',
+                    title:
+                        'What is the month & year of your conviction or release from supervision, whichever is later?',
+                    visibleIf: "{completionOfSentences} = 'Yes'",
+                },
+                {
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
+                    isRequired: true,
+                    name: 'paidRestitutionAndFees',
+                    title:
+                        'Have you paid all restitution, fines, court costs, late fees or other fees ordered by the Court in your case?',
+                    visibleIf: "{sufficientPeriodOfTime} = 'Enough Time Has Passed'",
+                },
+                {
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', "Don't Know/Not Sure"],
+                    isRequired: true,
+                    name: 'anyNewOffense',
+                    title:
+                        'Have you been convicted of or charged with another offense after the conviction you are trying to seal?',
+                    visibleIf: "{paidRestitutionAndFees} = 'Yes'",
+                },
+            ],
+        },
+        {
+            name: 'page7',
+            visibleIf:
+                "{completionOfSentencing} != 'Yes' or {sufficientPeriodOfTime} != 'Enough Time Has Passed' or {paidRestitutionAndFees} != 'Yes' or {anyNewOffense} != 'Yes'",
+            questions: [
+                {
+                    type: 'comment',
+                    name: 'about',
+                    title:
+                        'Given your responses, additional information will need to be collected to determine elibility. Please provide your contact information in the space below',
                 },
             ],
         },
