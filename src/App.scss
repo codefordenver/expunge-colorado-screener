@@ -1,3 +1,5 @@
+$color-pale-purple: rgb(162, 139, 184);
+
 .app {
     display: flex;
     width: 100vw;
@@ -8,18 +10,18 @@
 }
 
 .btn-nav {
-    background-color: rgb(162, 139, 184);
+    background-color: $color-pale-purple;
     border-radius: 5px;
     border-width: 1px;
     color: lightblue;
 }
 
 .btn-nav:hover {
-    background-color: rgb(133, 77, 185);
+    background-color: $color-pale-purple;
 }
 
 div.header {
-    color: rgb(162, 139, 184);
+    color: $color-pale-purple;
 }
 
 div.container {
@@ -27,5 +29,5 @@ div.container {
 }
 
 h1 {
-    color: rgb(162, 139, 184);
+    color: $color-pale-purple;
 }
