@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom';
 import React from 'react';
 import SurveyComponent from './Components/SurveyComponent';
-import './App.css';
+import './App.scss';
 
 ReactDOM.render(
     <React.StrictMode>
