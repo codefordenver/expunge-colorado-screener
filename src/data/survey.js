@@ -33,7 +33,7 @@ const SURVEY_DATA = {
                     isRequired: true,
                     name: 'federalCase',
                     title: 'Was your case a federal case?',
-                    visibleIf: "{over18} = 'Yes'",
+                    visibleIf: "{over18} = 'Yes' and {coloradoArrest} = 'Yes'",
                 },
             ],
         },
@@ -70,7 +70,7 @@ const SURVEY_DATA = {
                     name: 'chargeToSeal',
                     title: 'What charge are you looking to seal?',
                     visibleIf:
-                        "{chargeDismissedOrAcquitted} = 'No' or {chargeDismissedOrAcquitted} = 'Yes' ",
+                        "({chargeDismissedOrAcquitted} = 'No' or {chargeDismissedOrAcquitted} = 'Yes') and {sealingArrestRecordOnly} = 'No'",
                 },
             ],
         },
