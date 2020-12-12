@@ -1,0 +1,34 @@
+$color-pale-purple: rgb(162, 139, 184);
+$color-dark-purple: rgb(133, 77, 185);
+
+.app {
+    display: flex;
+    width: 100vw;
+    align-items: center;
+    flex-direction: column;
+    .center-me {
+    }
+}
+
+.btn-nav {
+    background-color: $color-pale-purple;
+    border-radius: 5px;
+    border-width: 1px;
+    color: lightblue;
+}
+
+.btn-nav:hover {
+    background-color: $color-dark-purple;
+}
+
+div.header {
+    color: $color-pale-purple;
+}
+
+div.container {
+    background-color: lightblue;
+}
+
+h1 {
+    color: $color-pale-purple;
+}
