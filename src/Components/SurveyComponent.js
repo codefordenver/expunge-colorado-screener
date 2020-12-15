@@ -27,13 +27,16 @@ function SurveyComponent() {
 
     return (
         <div>
-            <Survey.Survey
-                json={SURVEY_DATA}
-                css={myCss}
-                onValueChanged={persistDataToLocalStorage}
-                onComplete={onComplete}
-            />
-            <Outcome type={outcome} />
+            {!outcome ? (
+                <Survey.Survey
+                    json={SURVEY_DATA}
+                    css={myCss}
+                    onValueChanged={persistDataToLocalStorage}
+                    onComplete={onComplete}
+                />
+            ) : (
+                <Outcome type={outcome} />
+            )}
         </div>
     );
 }
