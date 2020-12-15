@@ -1,5 +1,11 @@
 const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
+    // triggers: [
+    //     {
+    //         type: 'complete',
+    //         expression: "{coloradoArrest} = 'No'"
+    //     }
+    // ],
     pages: [
         {
             name: 'preliminaryQuestions',
@@ -8,16 +14,12 @@ const SURVEY_DATA = {
                     type: 'radiogroup',
                     choices: ['Yes', 'No'],
                     isRequired: true,
-                    name: 'skipToEnd',
-                    title: 'Would you like to skip to the end?',
-                },
-                {
-                    type: 'radiogroup',
-                    choices: ['Yes', 'No'],
-                    isRequired: true,
                     name: 'coloradoArrest',
                     title: 'Did your arrest or charge take place in Colorado?',
-                    visibleIf: "{skipToEnd} = 'No'",
+                    // resultMap: {
+                    //     'Yes': 'Eligible',
+                    //     'No': 'Ineligible'
+                    // }
                 },
                 {
                     type: 'radiogroup',
@@ -40,7 +42,7 @@ const SURVEY_DATA = {
         {
             name: 'sealingArrestsAndCharges',
             visibleIf:
-                "{skipToEnd} = 'No' and {coloradoArrest} = 'Yes' and {over18} = 'Yes' and {federalCase} = 'No'",
+                "{coloradoArrest} = 'Yes' and {over18} = 'Yes' and {federalCase} = 'No'",
             questions: [
                 {
                     type: 'radiogroup',
@@ -68,9 +70,8 @@ const SURVEY_DATA = {
                     ],
                     isRequired: true,
                     name: 'chargeToSeal',
-                    title: 'What charge are you looking to seal?',
-                    visibleIf:
-                        "({chargeDismissedOrAcquitted} = 'No' or {chargeDismissedOrAcquitted} = 'Yes') and {sealingArrestRecordOnly} = 'No'",
+                    title: 'What conviction are you looking to seal?',
+                    visibleIf: "{chargeDismissedOrAcquitted} = 'No'",
                 },
             ],
         },
@@ -97,7 +98,7 @@ const SURVEY_DATA = {
                     isRequired: true,
                     name: 'enoughTimePassed',
                     title:
-                        'What is the month & year of your conviction or release from supervision, whichever is later?',
+                        'In most cases, a certain period of time must go by from the date of conviction, or the final date of completing a sentence, before you can apply to seal your record. What is the month & year you completed your sentencing/supervision?',
                     visibleIf: "{completedSentencing} = 'Yes'",
                 },
                 {
@@ -113,17 +114,26 @@ const SURVEY_DATA = {
                     type: 'radiogroup',
                     choices: ['Yes', 'No', 'Not Sure'],
                     isRequired: true,
+                    name: 'attemptedToSeal',
+                    title:
+                        'Have you attempted to seal your record for this conviction within the past 12 months?',
+                    visibleIf: "{paidRestitutionAndFees} = 'Yes'",
+                },
+                {
+                    type: 'radiogroup',
+                    choices: ['Yes', 'No', 'Not Sure'],
+                    isRequired: true,
                     name: 'anyNewOffense',
                     title:
                         'Have you been convicted of or charged with another offense after the conviction you are trying to seal?',
-                    visibleIf: "{paidRestitutionAndFees} = 'Yes'",
+                    visibleIf: "{attemptedToSeal} = 'No'",
                 },
             ],
         },
         {
             name: 'ineligibleStatus',
             visibleIf:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No'",
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
             questions: [
                 {
                     type: 'comment',
@@ -156,18 +166,6 @@ const SURVEY_DATA = {
                     name: 'about',
                     title:
                         'Given your responses, your case is eligible for the services provided by Expunge Colorado. Please provide your contact information in the space below',
-                },
-            ],
-        },
-        {
-            name: 'skipToEnd',
-            visibleIf: "{skipToEnd} = 'Yes'",
-            questions: [
-                {
-                    type: 'comment',
-                    name: 'about',
-                    title:
-                        'Please tell us about your main requirements for Survey library',
                 },
             ],
         },
