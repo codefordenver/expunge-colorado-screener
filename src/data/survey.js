@@ -1,11 +1,29 @@
 const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
-    // triggers: [
-    //     {
-    //         type: 'complete',
-    //         expression: "{coloradoArrest} = 'No'"
-    //     }
-    // ],
+    triggers: [
+        {
+            type: 'setvalue',
+            expression:
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
+            setToName: 'outcome',
+            setValue: 'ineligible',
+        },
+        {
+            type: 'setvalue',
+            expression:
+                "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'No'",
+
+            setToName: 'outcome',
+            setValue: 'eligible',
+        },
+        {
+            type: 'setvalue',
+            expression:
+                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {enoughTimePassed} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
+            setToName: 'outcome',
+            setValue: 'needInfo',
+        },
+    ],
     pages: [
         {
             name: 'preliminaryQuestions',
@@ -16,10 +34,6 @@ const SURVEY_DATA = {
                     isRequired: true,
                     name: 'coloradoArrest',
                     title: 'Did your arrest or charge take place in Colorado?',
-                    // resultMap: {
-                    //     'Yes': 'Eligible',
-                    //     'No': 'Ineligible'
-                    // }
                 },
                 {
                     type: 'radiogroup',
@@ -130,56 +144,7 @@ const SURVEY_DATA = {
                 },
             ],
         },
-        {
-            name: 'ineligibleStatus',
-            visibleIf:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
-            questions: [
-                {
-                    type: 'comment',
-                    name: 'about',
-                    title:
-                        'Given your responses, your case is not eligible for the services provided by Expunge Colorado.',
-                },
-            ],
-        },
-        {
-            name: 'additionalInfoRequired',
-            visibleIf:
-                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {enoughTimePassed} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
-            questions: [
-                {
-                    type: 'comment',
-                    name: 'about',
-                    title:
-                        'Given your responses, additional information will need to be collected to determine elibility. Please provide your contact information in the space below',
-                },
-            ],
-        },
-        {
-            name: 'eligibleStatus',
-            visibleIf:
-                "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'No'",
-            questions: [
-                {
-                    type: 'comment',
-                    name: 'about',
-                    title:
-                        'Given your responses, your case is eligible for the services provided by Expunge Colorado. Please provide your contact information in the space below',
-                },
-            ],
-        },
     ],
 };
-
-// {
-//     type: 'checkbox',
-//     choices: ['Bootstrap', 'Foundation'],
-//     hasOther: true,
-//     isRequired: true,
-//     name: 'framework',
-//     title: 'What front-end framework do you use?',
-//     visibleIf: "{frameworkUsing} = 'Yes'",
-// },
 
 export default SURVEY_DATA;
