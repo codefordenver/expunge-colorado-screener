@@ -1,6 +1,6 @@
 # expunge-colorado-screener
 
-Welcome to the Code for Denver - Expunge Colorado - Screener Tool team! This guide is meant to give developers and stakeholders new to the team and project a starting place for the onboarding process and get you up to speed on the project's key milestones, processes and artifacts. This is a living document, so feel free to update this as needed to ensure it has the latest and greatest knowledge of this project.
+Welcome to the Code for Denver - Expunge Colorado - Screener Tool team!
 
 ## Prerequisites 📚
 - Node
