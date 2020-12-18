@@ -2,11 +2,11 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import * as Survey from 'survey-react';
 import SURVEY_DATA from './data/survey.js';
-import SurveyComponent from './Components/SurveyComponent';
+import SurveyComponent from './components/SurveyComponent';
 import './App.scss';
 
 const surveyModel = new Survey.Model(SURVEY_DATA);
-// for debugging
+// for debugging only
 // window.survey = surveyModel;
 
 ReactDOM.render(

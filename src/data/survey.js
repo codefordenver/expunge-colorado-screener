@@ -50,14 +50,13 @@ const SURVEY_DATA = {
                     isRequired: true,
                     name: 'federalCase',
                     title: 'Was your case a federal case?',
-                    visibleIf: "{over18} = 'Yes' and {coloradoArrest} = 'Yes'",
+                    visibleIf: "{over18} = 'Yes'",
                 },
             ],
         },
         {
             name: 'sealingArrestsAndCharges',
-            visibleIf:
-                "{coloradoArrest} = 'Yes' and {over18} = 'Yes' and {federalCase} = 'No'",
+            visibleIf: "{federalCase} = 'No'",
             questions: [
                 {
                     type: 'radiogroup',
@@ -92,8 +91,7 @@ const SURVEY_DATA = {
         },
         {
             name: 'convictionRequirements',
-            visibleIf:
-                "{chargeToSeal} = 'Eligible Charge Type' and {chargeDismissedOrAcquitted} = 'No'",
+            visibleIf: "{chargeToSeal} = 'Eligible Charge Type'",
             questions: [
                 {
                     type: 'radiogroup',

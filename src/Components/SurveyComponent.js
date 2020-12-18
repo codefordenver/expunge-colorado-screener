@@ -30,10 +30,13 @@ function SurveyComponent({ surveyModel }) {
         setCache({ currentPageNo, data });
     }
 
-    function startOver() {
+    // TODO/fix: if called *after* completing the survey,
+    // all questions on first page are visible (this gets
+    // corrected as soon as you select anything)
+    function reset() {
+        surveyModel.clear();
         setCache(null);
         setOutcome(null);
-        surveyModel.clear();
     }
 
     return (
@@ -48,8 +51,8 @@ function SurveyComponent({ surveyModel }) {
             ) : (
                 <Outcome type={outcome} />
             )}
-            <button onClick={startOver} className="btn-nav">
-                Start Over
+            <button onClick={reset} className="btn-nav">
+                Reset
             </button>
         </div>
     );
