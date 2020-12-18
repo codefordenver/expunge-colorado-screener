@@ -1,24 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
-import { useState, useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const myCss = {
-    matrix: {
-        root: 'table table-striped',
-    },
     navigationButton: 'btn-nav',
     header: 'header',
     container: 'container',
 };
 
-function SurveyComponent({ surveyModel }) {
+function SurveyComponent({ surveyModel, version }) {
     const [cache, setCache] = useLocalStorage('surveyCache', null);
     const [outcome, setOutcome] = useState('');
 
     useEffect(() => {
-        surveyModel.data = cache?.data;
-        surveyModel.currentPageNo = cache?.currentPageNo;
+        if (cache?.version === version) {
+            surveyModel.data = cache.data;
+            surveyModel.currentPageNo = cache.currentPageNo;
+        } else {
+            setCache({ version });
+        }
     }, []);
 
     function handleComplete(survey) {
@@ -27,7 +27,7 @@ function SurveyComponent({ surveyModel }) {
     }
 
     function persistDataToLocalStorage({ currentPageNo, data }) {
-        setCache({ currentPageNo, data });
+        setCache({ ...cache, currentPageNo, data });
     }
 
     // TODO/fix: if called *after* completing the survey,
