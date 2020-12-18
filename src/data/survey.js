@@ -1,5 +1,6 @@
 const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
+    clearInvisibleValues: 'onHidden',
     triggers: [
         {
             type: 'setvalue',

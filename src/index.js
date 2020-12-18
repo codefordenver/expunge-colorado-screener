@@ -6,6 +6,8 @@ import SurveyComponent from './Components/SurveyComponent';
 import './App.scss';
 
 const surveyModel = new Survey.Model(SURVEY_DATA);
+// for debugging
+// window.survey = surveyModel;
 
 ReactDOM.render(
     <React.StrictMode>

@@ -17,9 +17,9 @@ function SurveyComponent({ surveyModel }) {
     const [outcome, setOutcome] = useState('');
 
     useEffect(() => {
-        surveyModel.currentPageNo = cache?.currentPageNo;
         surveyModel.data = cache?.data;
-    }, [surveyModel]);
+        surveyModel.currentPageNo = cache?.currentPageNo;
+    }, []);
 
     function handleComplete(survey) {
         setOutcome(survey.data.outcome);
@@ -28,6 +28,12 @@ function SurveyComponent({ surveyModel }) {
 
     function persistDataToLocalStorage({ currentPageNo, data }) {
         setCache({ currentPageNo, data });
+    }
+
+    function startOver() {
+        setCache(null);
+        setOutcome(null);
+        surveyModel.clear();
     }
 
     return (
@@ -42,6 +48,9 @@ function SurveyComponent({ surveyModel }) {
             ) : (
                 <Outcome type={outcome} />
             )}
+            <button onClick={startOver} className="btn-nav">
+                Start Over
+            </button>
         </div>
     );
 }
