@@ -1,7 +1,6 @@
 import React from 'react';
 import * as Survey from 'survey-react';
-import SURVEY_DATA from '../data/survey.js';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const myCss = {
@@ -13,26 +12,32 @@ const myCss = {
     container: 'container',
 };
 
-function SurveyComponent() {
-    const [surveyData, setSurveyData] = useLocalStorage('surveyData', null);
+function SurveyComponent({ surveyModel }) {
+    const [cache, setCache] = useLocalStorage('surveyCache', null);
     const [outcome, setOutcome] = useState('');
 
-    function onComplete(survey) {
+    useEffect(() => {
+        surveyModel.currentPageNo = cache?.currentPageNo;
+        surveyModel.data = cache?.data;
+    }, [surveyModel]);
+
+    function handleComplete(survey) {
         setOutcome(survey.data.outcome);
+        setCache(null);
     }
 
-    function persistDataToLocalStorage(survey) {
-        setSurveyData(survey.data);
+    function persistDataToLocalStorage({ currentPageNo, data }) {
+        setCache({ currentPageNo, data });
     }
 
     return (
         <div>
             {!outcome ? (
                 <Survey.Survey
-                    json={SURVEY_DATA}
                     css={myCss}
+                    model={surveyModel}
                     onValueChanged={persistDataToLocalStorage}
-                    onComplete={onComplete}
+                    onComplete={handleComplete}
                 />
             ) : (
                 <Outcome type={outcome} />
