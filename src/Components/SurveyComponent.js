@@ -30,9 +30,9 @@ function SurveyComponent({ surveyModel, version }) {
         setCache({ ...cache, currentPageNo, data });
     }
 
-    // TODO/fix: if called *after* completing the survey,
-    // all questions on first page are visible (this gets
-    // corrected as soon as you select anything)
+    /* TODO/fix: if this is called *after* completing the survey,
+       it resets everything except for question visibility on page 0
+       (but corrects itself as soon as you try to select something) */
     function reset() {
         surveyModel.clear();
         setCache(null);
