@@ -1,42 +1,59 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
-import SURVEY_DATA from '../data/survey.js';
-import { useState, useEffect, useRef } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const myCss = {
-    matrix: {
-        root: 'table table-striped',
-    },
     navigationButton: 'btn-nav',
     header: 'header',
     container: 'container',
 };
 
-function SurveyComponent() {
-    const [surveyData, setSurveyData] = useLocalStorage('surveyData', null);
+function SurveyComponent({ surveyModel, version }) {
+    const [cache, setCache] = useLocalStorage('surveyCache', null);
     const [outcome, setOutcome] = useState('');
 
-    function onComplete(survey) {
+    useEffect(() => {
+        if (cache?.version === version) {
+            surveyModel.data = cache.data;
+            surveyModel.currentPageNo = cache.currentPageNo;
+        } else {
+            setCache({ version });
+        }
+    }, []);
+
+    function handleComplete(survey) {
         setOutcome(survey.data.outcome);
+        setCache(null);
     }
 
-    function persistDataToLocalStorage(survey) {
-        setSurveyData(survey.data);
+    function persistDataToLocalStorage({ currentPageNo, data }) {
+        setCache({ ...cache, currentPageNo, data });
+    }
+
+    /* TODO/fix: if this is called *after* completing the survey,
+       it resets everything except for question visibility on page 0
+       (but corrects itself as soon as you try to select something) */
+    function reset() {
+        surveyModel.clear();
+        setCache(null);
+        setOutcome(null);
     }
 
     return (
         <div>
             {!outcome ? (
                 <Survey.Survey
-                    json={SURVEY_DATA}
                     css={myCss}
+                    model={surveyModel}
                     onValueChanged={persistDataToLocalStorage}
-                    onComplete={onComplete}
+                    onComplete={handleComplete}
                 />
             ) : (
                 <Outcome type={outcome} />
             )}
+            <button onClick={reset} className="btn-nav">
+                Reset
+            </button>
         </div>
     );
 }

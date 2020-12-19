@@ -6,8 +6,6 @@ $color-dark-purple: rgb(133, 77, 185);
     width: 100vw;
     align-items: center;
     flex-direction: column;
-    .center-me {
-    }
 }
 
 .btn-nav {
@@ -27,6 +25,8 @@ div.header {
 
 div.container {
     background-color: lightblue;
+    padding-bottom: 1em;
+    margin-bottom: 2em;
 }
 
 h1 {
