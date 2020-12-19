@@ -5,7 +5,7 @@ const SURVEY_DATA = {
         {
             type: 'setvalue',
             expression:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
             setToName: 'outcome',
             setValue: 'ineligible',
         },
@@ -76,11 +76,52 @@ const SURVEY_DATA = {
                     visibleIf: "{sealingArrestRecordOnly} = 'No'",
                 },
                 {
-                    type: 'radiogroup',
+                    type: 'dropdown',
                     choices: [
-                        'Eligible Charge Type',
-                        'Ineligible Charge Type',
-                        'Not Sure',
+                        { value: 'Ineligible', text: 'Class 1 Felony' },
+                        { value: 'Ineligible', text: 'Class 2 Felony' },
+                        { value: 'Ineligible', text: 'Class 3 Felony' },
+                        { value: 'Ineligible', text: 'Class 1 Drug Felony' },
+                        { value: 'Ineligible', text: 'Felony Sex Offense' },
+                        { value: 'Ineligible', text: 'Felony Drug Special Offense' },
+                        { value: 'Ineligible', text: 'Felony Child Abuse' },
+                        { value: 'Ineligible', text: 'Felony Domestic Violence' },
+                        { value: 'Ineligible', text: 'Felony Murder or Manslaughter' },
+                        {
+                            value: 'Ineligible',
+                            text: 'Felony Vehicular Homicide or Assault',
+                        },
+                        { value: 'Ineligible', text: 'Felony Menacing' },
+                        {
+                            value: 'Ineligible',
+                            text: 'Felony First or Second Degree Kidnapping',
+                        },
+                        { value: 'Ineligible', text: 'Felony Robbery' },
+                        {
+                            value: 'Ineligible',
+                            text: 'Felony First or Second Degree Burglary of a Dwelling',
+                        },
+                        {
+                            value: 'Ineligible',
+                            text:
+                                'Felony Retaliating or Intimidating a Witness or Victim',
+                        },
+                        { value: 'Ineligible', text: 'Misdemeanor Traffic Offense' },
+                        { value: 'Ineligible', text: 'DUI or DWAI' },
+                        { value: 'Eligible', text: 'Petty Offense' },
+                        { value: 'Eligible', text: 'Petty Drug Offense' },
+                        { value: 'Eligible', text: 'Class 2 Misdemeanor' },
+                        { value: 'Eligible', text: 'Class 3 Misdemeanor' },
+                        { value: 'Eligible', text: 'Drug Misdemeanor Offense' },
+                        { value: 'Eligible', text: 'F4' },
+                        { value: 'Eligible', text: 'F5' },
+                        { value: 'Eligible', text: 'F6' },
+                        { value: 'Eligible', text: 'DF3' },
+                        { value: 'Eligible', text: 'DF4' },
+                        { value: 'Eligible', text: 'M1' },
+                        { value: 'Eligible', text: 'Municipal Offense' },
+                        { value: 'Eligible', text: 'DF2' },
+                        { value: 'Not Sure', text: 'Not Sure' },
                     ],
                     isRequired: true,
                     name: 'chargeToSeal',
@@ -91,7 +132,7 @@ const SURVEY_DATA = {
         },
         {
             name: 'convictionRequirements',
-            visibleIf: "{chargeToSeal} = 'Eligible Charge Type'",
+            visibleIf: "{chargeToSeal} = 'Eligible'",
             questions: [
                 {
                     type: 'radiogroup',
