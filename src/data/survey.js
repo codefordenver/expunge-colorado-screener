@@ -2,11 +2,11 @@ import * as Survey from 'survey-react';
 
 function hasEnoughTimePassed(params) {
     if (params[1]) {
-        let charge = params[0];
-        let date = new Date(params[1]);
-        let dateYear = date.getFullYear() + charge;
-        date.setFullYear(dateYear);
-        if (date < Date.now()) {
+        let waitingPeriod = params[0];
+        let completedDate = new Date(params[1]);
+        let dateYear = completedDate.getFullYear() + waitingPeriod;
+        let eligibleDate = completedDate.setFullYear(dateYear);
+        if (eligibleDate < Date.now()) {
             return 'Yes';
         } else {
             return 'No';
