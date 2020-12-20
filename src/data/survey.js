@@ -15,6 +15,7 @@ function hasEnoughTimePassed(params) {
 }
 
 function chargeEligibility(params) {
+    let charge = params[0];
     const chargesMap = {
         'Class 1 Felony': 'Ineligible',
         'Class 2 Felony': 'Ineligible',
@@ -49,7 +50,7 @@ function chargeEligibility(params) {
         'Not Sure': 'Not Sure',
     };
 
-    return chargesMap[params[0]];
+    return chargesMap[charge];
 }
 
 Survey.FunctionFactory.Instance.register('hasEnoughTimePassed', hasEnoughTimePassed);
@@ -70,7 +71,6 @@ const SURVEY_DATA = {
             type: 'setvalue',
             expression:
                 "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'No'",
-
             setToName: 'outcome',
             setValue: 'eligible',
         },
