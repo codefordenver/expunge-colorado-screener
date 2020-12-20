@@ -1,10 +1,10 @@
 import * as Survey from 'survey-react';
 
-function calculateDate(params) {
+function hasEnoughTimePassed(params) {
     if (params[1]) {
         let charge = params[0];
         let date = new Date(params[1]);
-        let dateYear = date.getFullYear() + +charge.split('-')[1];
+        let dateYear = date.getFullYear() + charge;
         date.setFullYear(dateYear);
         if (date < Date.now()) {
             return 'Yes';
@@ -14,7 +14,46 @@ function calculateDate(params) {
     }
 }
 
-Survey.FunctionFactory.Instance.register('calculateDate', calculateDate);
+function chargeEligibility(params) {
+    const chargesMap = {
+        'Class 1 Felony': 'Ineligible',
+        'Class 2 Felony': 'Ineligible',
+        'Class 3 Felony': 'Ineligible',
+        'Class 1 Drug Felony': 'Ineligible',
+        'Felony Sex Offense': 'Ineligible',
+        'Felony Drug Special Offense': 'Ineligible',
+        'Felony Child Abuse': 'Ineligible',
+        'Felony Domestic Violence': 'Ineligible',
+        'Felony Murder or Manslaughter': 'Ineligible',
+        'Felony Vehicular Homicide or Assault': 'Ineligible',
+        'Felony Menacing': 'Ineligible',
+        'Felony First or Second Degree Kidnapping': 'Ineligible',
+        'Felony Robbery': 'Ineligible',
+        'Felony First or Second Degree Burglary of a Dwelling': 'Ineligible',
+        'Felony Retaliating or Intimidating a Witness or Victim': 'Ineligible',
+        'Misdemeanor Traffic Offense': 'Ineligible',
+        'DUI or DWAI': 'Ineligible',
+        'Petty Offense': 1,
+        'Petty Drug Offense': 1,
+        'Class 2 Misdemeanor': 2,
+        'Class 3 Misdemeanor': 2,
+        'Drug Misdemeanor Offense': 2,
+        F4: 3,
+        F5: 3,
+        F6: 3,
+        DF3: 3,
+        DF4: 3,
+        M1: 3,
+        'Municipal Offense': 3,
+        DF2: 5,
+        'Not Sure': 'Not Sure',
+    };
+
+    return chargesMap[params[0]];
+}
+
+Survey.FunctionFactory.Instance.register('hasEnoughTimePassed', hasEnoughTimePassed);
+Survey.FunctionFactory.Instance.register('chargeEligibility', chargeEligibility);
 
 const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
@@ -23,7 +62,7 @@ const SURVEY_DATA = {
         {
             type: 'setvalue',
             expression:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible' or {completedSentencing} = 'No' or {enoughTimePassed} = 'No' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or chargeEligibility({chargeToSeal}) = 'Ineligible' or {completedSentencing} = 'No' or hasEnoughTimePassed(chargeEligibility({chargeToSeal}), {enoughTimePassed}) = 'No' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
             setToName: 'outcome',
             setValue: 'ineligible',
         },
@@ -96,50 +135,37 @@ const SURVEY_DATA = {
                 {
                     type: 'dropdown',
                     choices: [
-                        { value: 'Ineligible', text: 'Class 1 Felony' },
-                        { value: 'Ineligible', text: 'Class 2 Felony' },
-                        { value: 'Ineligible', text: 'Class 3 Felony' },
-                        { value: 'Ineligible', text: 'Class 1 Drug Felony' },
-                        { value: 'Ineligible', text: 'Felony Sex Offense' },
-                        { value: 'Ineligible', text: 'Felony Drug Special Offense' },
-                        { value: 'Ineligible', text: 'Felony Child Abuse' },
-                        { value: 'Ineligible', text: 'Felony Domestic Violence' },
-                        { value: 'Ineligible', text: 'Felony Murder or Manslaughter' },
-                        {
-                            value: 'Ineligible',
-                            text: 'Felony Vehicular Homicide or Assault',
-                        },
-                        { value: 'Ineligible', text: 'Felony Menacing' },
-                        {
-                            value: 'Ineligible',
-                            text: 'Felony First or Second Degree Kidnapping',
-                        },
-                        { value: 'Ineligible', text: 'Felony Robbery' },
-                        {
-                            value: 'Ineligible',
-                            text: 'Felony First or Second Degree Burglary of a Dwelling',
-                        },
-                        {
-                            value: 'Ineligible',
-                            text:
-                                'Felony Retaliating or Intimidating a Witness or Victim',
-                        },
-                        { value: 'Ineligible', text: 'Misdemeanor Traffic Offense' },
-                        { value: 'Ineligible', text: 'DUI or DWAI' },
-                        { value: 'Eligible-1', text: 'Petty Offense' },
-                        { value: 'Eligible-1', text: 'Petty Drug Offense' },
-                        { value: 'Eligible-2', text: 'Class 2 Misdemeanor' },
-                        { value: 'Eligible-2', text: 'Class 3 Misdemeanor' },
-                        { value: 'Eligible-2', text: 'Drug Misdemeanor Offense' },
-                        { value: 'Eligible-3', text: 'F4' },
-                        { value: 'Eligible-3', text: 'F5' },
-                        { value: 'Eligible-3', text: 'F6' },
-                        { value: 'Eligible-3', text: 'DF3' },
-                        { value: 'Eligible-3', text: 'DF4' },
-                        { value: 'Eligible-3', text: 'M1' },
-                        { value: 'Eligible-3', text: 'Municipal Offense' },
-                        { value: 'Eligible-5', text: 'DF2' },
-                        { value: 'Not Sure', text: 'Not Sure' },
+                        'Class 1 Felony',
+                        'Class 2 Felony',
+                        'Class 3 Felony',
+                        'Class 1 Drug Felony',
+                        'Felony Sex Offense',
+                        'Felony Drug Special Offense',
+                        'Felony Child Abuse',
+                        'Felony Domestic Violence',
+                        'Felony Murder or Manslaughter',
+                        'Felony Vehicular Homicide or Assault',
+                        'Felony Menacing',
+                        'Felony First or Second Degree Kidnapping',
+                        'Felony Robbery',
+                        'Felony First or Second Degree Burglary of a Dwelling',
+                        'Felony Retaliating or Intimidating a Witness or Victim',
+                        'Misdemeanor Traffic Offense',
+                        'DUI or DWAI',
+                        'Petty Offense',
+                        'Petty Drug Offense',
+                        'Class 2 Misdemeanor',
+                        'Class 3 Misdemeanor',
+                        'Drug Misdemeanor Offense',
+                        'F4',
+                        'F5',
+                        'F6',
+                        'DF3',
+                        'DF4',
+                        'M1',
+                        'Municipal Offense',
+                        'DF2',
+                        'Not Sure',
                     ],
                     isRequired: true,
                     name: 'chargeToSeal',
@@ -150,7 +176,7 @@ const SURVEY_DATA = {
         },
         {
             name: 'convictionRequirements',
-            visibleIf: "!({chargeToSeal} = 'Ineligible' or {chargeToSeal} = 'Not Sure')",
+            visibleIf: 'chargeEligibility({chargeToSeal}) > 0',
             questions: [
                 {
                     type: 'radiogroup',
@@ -163,7 +189,6 @@ const SURVEY_DATA = {
                 {
                     type: 'text',
                     inputType: 'date',
-
                     isRequired: true,
                     name: 'enoughTimePassed',
                     title:
@@ -174,7 +199,8 @@ const SURVEY_DATA = {
         },
         {
             name: 'withinTimeFrame',
-            visibleIf: "calculateDate({chargeToSeal}, {enoughTimePassed}) = 'Yes'",
+            visibleIf:
+                "hasEnoughTimePassed(chargeEligibility({chargeToSeal}), {enoughTimePassed}) = 'Yes'",
             questions: [
                 {
                     type: 'radiogroup',
