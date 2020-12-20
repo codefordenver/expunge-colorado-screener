@@ -1,3 +1,21 @@
+import * as Survey from 'survey-react';
+
+function calculateDate(params) {
+    if (params[1]) {
+        let charge = params[0];
+        let date = new Date(params[1]);
+        let dateYear = date.getFullYear() + +charge.split('-')[1];
+        date.setFullYear(dateYear);
+        if (date < Date.now()) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+}
+
+Survey.FunctionFactory.Instance.register('calculateDate', calculateDate);
+
 const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
     clearInvisibleValues: 'onHidden',
@@ -5,7 +23,7 @@ const SURVEY_DATA = {
         {
             type: 'setvalue',
             expression:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible' or {completedSentencing} = 'No' or {enoughTimePassed} = 'No' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
             setToName: 'outcome',
             setValue: 'ineligible',
         },
@@ -20,7 +38,7 @@ const SURVEY_DATA = {
         {
             type: 'setvalue',
             expression:
-                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {enoughTimePassed} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
+                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
             setToName: 'outcome',
             setValue: 'needInfo',
         },
@@ -108,19 +126,19 @@ const SURVEY_DATA = {
                         },
                         { value: 'Ineligible', text: 'Misdemeanor Traffic Offense' },
                         { value: 'Ineligible', text: 'DUI or DWAI' },
-                        { value: 'Eligible', text: 'Petty Offense' },
-                        { value: 'Eligible', text: 'Petty Drug Offense' },
-                        { value: 'Eligible', text: 'Class 2 Misdemeanor' },
-                        { value: 'Eligible', text: 'Class 3 Misdemeanor' },
-                        { value: 'Eligible', text: 'Drug Misdemeanor Offense' },
-                        { value: 'Eligible', text: 'F4' },
-                        { value: 'Eligible', text: 'F5' },
-                        { value: 'Eligible', text: 'F6' },
-                        { value: 'Eligible', text: 'DF3' },
-                        { value: 'Eligible', text: 'DF4' },
-                        { value: 'Eligible', text: 'M1' },
-                        { value: 'Eligible', text: 'Municipal Offense' },
-                        { value: 'Eligible', text: 'DF2' },
+                        { value: 'Eligible-1', text: 'Petty Offense' },
+                        { value: 'Eligible-1', text: 'Petty Drug Offense' },
+                        { value: 'Eligible-2', text: 'Class 2 Misdemeanor' },
+                        { value: 'Eligible-2', text: 'Class 3 Misdemeanor' },
+                        { value: 'Eligible-2', text: 'Drug Misdemeanor Offense' },
+                        { value: 'Eligible-3', text: 'F4' },
+                        { value: 'Eligible-3', text: 'F5' },
+                        { value: 'Eligible-3', text: 'F6' },
+                        { value: 'Eligible-3', text: 'DF3' },
+                        { value: 'Eligible-3', text: 'DF4' },
+                        { value: 'Eligible-3', text: 'M1' },
+                        { value: 'Eligible-3', text: 'Municipal Offense' },
+                        { value: 'Eligible-5', text: 'DF2' },
                         { value: 'Not Sure', text: 'Not Sure' },
                     ],
                     isRequired: true,
@@ -132,7 +150,7 @@ const SURVEY_DATA = {
         },
         {
             name: 'convictionRequirements',
-            visibleIf: "{chargeToSeal} = 'Eligible'",
+            visibleIf: "!({chargeToSeal} = 'Ineligible' or {chargeToSeal} = 'Not Sure')",
             questions: [
                 {
                     type: 'radiogroup',
@@ -143,18 +161,21 @@ const SURVEY_DATA = {
                         'If you were sentenced at the end of your case, have you completed all sentencing, including supervised or unsupervised probation, parole, community corrections, incarceration, etc?',
                 },
                 {
-                    type: 'radiogroup',
-                    choices: [
-                        'Enough Time Has Passed',
-                        'Not Enough Time Has Passed',
-                        'Not Sure',
-                    ],
+                    type: 'text',
+                    inputType: 'date',
+
                     isRequired: true,
                     name: 'enoughTimePassed',
                     title:
                         'In most cases, a certain period of time must go by from the date of conviction, or the final date of completing a sentence, before you can apply to seal your record. What is the month & year you completed your sentencing/supervision?',
                     visibleIf: "{completedSentencing} = 'Yes'",
                 },
+            ],
+        },
+        {
+            name: 'withinTimeFrame',
+            visibleIf: "calculateDate({chargeToSeal}, {enoughTimePassed}) = 'Yes'",
+            questions: [
                 {
                     type: 'radiogroup',
                     choices: ['Yes', 'No', 'Not Sure'],
@@ -162,7 +183,6 @@ const SURVEY_DATA = {
                     name: 'paidRestitutionAndFees',
                     title:
                         'Have you paid all restitution, fines, court costs, late fees or other fees ordered by the Court in your case?',
-                    visibleIf: "{enoughTimePassed} = 'Enough Time Has Passed'",
                 },
                 {
                     type: 'radiogroup',
