@@ -1,3 +1,61 @@
+import * as Survey from 'survey-react';
+
+function hasEnoughTimePassed(params) {
+    if (params[1]) {
+        let waitingPeriod = params[0];
+        let completedDate = new Date(params[1]);
+        let dateYear = completedDate.getFullYear() + waitingPeriod;
+        let eligibleDate = completedDate.setFullYear(dateYear);
+        if (eligibleDate < Date.now()) {
+            return 'Yes';
+        } else {
+            return 'No';
+        }
+    }
+}
+
+function chargeEligibility(params) {
+    let charge = params[0];
+    const chargesMap = {
+        'Class 1 Felony': 'Ineligible',
+        'Class 2 Felony': 'Ineligible',
+        'Class 3 Felony': 'Ineligible',
+        'Class 1 Drug Felony': 'Ineligible',
+        'Felony Sex Offense': 'Ineligible',
+        'Felony Drug Special Offense': 'Ineligible',
+        'Felony Child Abuse': 'Ineligible',
+        'Felony Domestic Violence': 'Ineligible',
+        'Felony Murder or Manslaughter': 'Ineligible',
+        'Felony Vehicular Homicide or Assault': 'Ineligible',
+        'Felony Menacing': 'Ineligible',
+        'Felony First or Second Degree Kidnapping': 'Ineligible',
+        'Felony Robbery': 'Ineligible',
+        'Felony First or Second Degree Burglary of a Dwelling': 'Ineligible',
+        'Felony Retaliating or Intimidating a Witness or Victim': 'Ineligible',
+        'Misdemeanor Traffic Offense': 'Ineligible',
+        'DUI or DWAI': 'Ineligible',
+        'Petty Offense': 1,
+        'Petty Drug Offense': 1,
+        'Class 2 Misdemeanor': 2,
+        'Class 3 Misdemeanor': 2,
+        'Drug Misdemeanor Offense': 2,
+        F4: 3,
+        F5: 3,
+        F6: 3,
+        DF3: 3,
+        DF4: 3,
+        M1: 3,
+        'Municipal Offense': 3,
+        DF2: 5,
+        'Not Sure': 'Not Sure',
+    };
+
+    return chargesMap[charge];
+}
+
+Survey.FunctionFactory.Instance.register('hasEnoughTimePassed', hasEnoughTimePassed);
+Survey.FunctionFactory.Instance.register('chargeEligibility', chargeEligibility);
+
 const SURVEY_DATA = {
     title: 'Tell us some more about your case.',
     clearInvisibleValues: 'onHidden',
@@ -5,7 +63,7 @@ const SURVEY_DATA = {
         {
             type: 'setvalue',
             expression:
-                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or {chargeToSeal} = 'Ineligible Charge Type' or {completedSentencing} = 'No' or {enoughTimePassed} = 'Not Enough Time Has Passed' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
+                "{coloradoArrest} = 'No' or {over18} = 'No' or {federalCase} = 'Yes' or chargeEligibility({chargeToSeal}) = 'Ineligible' or {completedSentencing} = 'No' or hasEnoughTimePassed(chargeEligibility({chargeToSeal}), {enoughTimePassed}) = 'No' or {paidRestitutionAndFees} = 'No' or {attemptedToSeal} = 'Yes'",
             setToName: 'outcome',
             setValue: 'ineligible',
         },
@@ -13,14 +71,13 @@ const SURVEY_DATA = {
             type: 'setvalue',
             expression:
                 "{sealingArrestRecordOnly} = 'Yes' or {chargeDismissedOrAcquitted} = 'Yes' or {anyNewOffense} = 'No'",
-
             setToName: 'outcome',
             setValue: 'eligible',
         },
         {
             type: 'setvalue',
             expression:
-                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {enoughTimePassed} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
+                "{federalCase} = 'Not Sure' or {chargeToSeal} = 'Not Sure' or {completedSentencing} = 'Not Sure' or {chargeDismissedOrAcquitted} = 'Not Sure' or {paidRestitutionAndFees} = 'Not Sure' or {anyNewOffense} = 'Yes' or {anyNewOffense} = 'Not Sure'",
             setToName: 'outcome',
             setValue: 'needInfo',
         },
@@ -76,10 +133,38 @@ const SURVEY_DATA = {
                     visibleIf: "{sealingArrestRecordOnly} = 'No'",
                 },
                 {
-                    type: 'radiogroup',
+                    type: 'dropdown',
                     choices: [
-                        'Eligible Charge Type',
-                        'Ineligible Charge Type',
+                        'Class 1 Felony',
+                        'Class 2 Felony',
+                        'Class 3 Felony',
+                        'Class 1 Drug Felony',
+                        'Felony Sex Offense',
+                        'Felony Drug Special Offense',
+                        'Felony Child Abuse',
+                        'Felony Domestic Violence',
+                        'Felony Murder or Manslaughter',
+                        'Felony Vehicular Homicide or Assault',
+                        'Felony Menacing',
+                        'Felony First or Second Degree Kidnapping',
+                        'Felony Robbery',
+                        'Felony First or Second Degree Burglary of a Dwelling',
+                        'Felony Retaliating or Intimidating a Witness or Victim',
+                        'Misdemeanor Traffic Offense',
+                        'DUI or DWAI',
+                        'Petty Offense',
+                        'Petty Drug Offense',
+                        'Class 2 Misdemeanor',
+                        'Class 3 Misdemeanor',
+                        'Drug Misdemeanor Offense',
+                        'F4',
+                        'F5',
+                        'F6',
+                        'DF3',
+                        'DF4',
+                        'M1',
+                        'Municipal Offense',
+                        'DF2',
                         'Not Sure',
                     ],
                     isRequired: true,
@@ -91,7 +176,7 @@ const SURVEY_DATA = {
         },
         {
             name: 'convictionRequirements',
-            visibleIf: "{chargeToSeal} = 'Eligible Charge Type'",
+            visibleIf: 'chargeEligibility({chargeToSeal}) > 0',
             questions: [
                 {
                     type: 'radiogroup',
@@ -102,18 +187,21 @@ const SURVEY_DATA = {
                         'If you were sentenced at the end of your case, have you completed all sentencing, including supervised or unsupervised probation, parole, community corrections, incarceration, etc?',
                 },
                 {
-                    type: 'radiogroup',
-                    choices: [
-                        'Enough Time Has Passed',
-                        'Not Enough Time Has Passed',
-                        'Not Sure',
-                    ],
+                    type: 'text',
+                    inputType: 'date',
                     isRequired: true,
                     name: 'enoughTimePassed',
                     title:
                         'In most cases, a certain period of time must go by from the date of conviction, or the final date of completing a sentence, before you can apply to seal your record. What is the month & year you completed your sentencing/supervision?',
                     visibleIf: "{completedSentencing} = 'Yes'",
                 },
+            ],
+        },
+        {
+            name: 'withinTimeFrame',
+            visibleIf:
+                "hasEnoughTimePassed(chargeEligibility({chargeToSeal}), {enoughTimePassed}) = 'Yes'",
+            questions: [
                 {
                     type: 'radiogroup',
                     choices: ['Yes', 'No', 'Not Sure'],
@@ -121,7 +209,6 @@ const SURVEY_DATA = {
                     name: 'paidRestitutionAndFees',
                     title:
                         'Have you paid all restitution, fines, court costs, late fees or other fees ordered by the Court in your case?',
-                    visibleIf: "{enoughTimePassed} = 'Enough Time Has Passed'",
                 },
                 {
                     type: 'radiogroup',
