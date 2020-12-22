@@ -13,7 +13,7 @@ function SurveyComponent({ surveyModel, version }) {
     const [outcome, setOutcome] = useState('');
 
     useEffect(() => {
-        if (cache?.version === version) {
+        if (cache?.version === version && cache?.version != undefined) {
             surveyModel.data = cache.data;
             surveyModel.currentPageNo = cache.currentPageNo;
         } else {
