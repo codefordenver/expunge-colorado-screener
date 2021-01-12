@@ -11,7 +11,6 @@ function DemographicSurveyComponent({ surveyModel }) {
     const [results, setResults] = useState('');
 
     function handleComplete(survey) {
-        console.log(survey.data);
         setResults(survey.data);
     }
 
