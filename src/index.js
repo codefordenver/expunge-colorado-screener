@@ -3,7 +3,7 @@ import React from 'react';
 import jsSHA from 'jssha';
 import * as Survey from 'survey-react';
 import SURVEY_DATA from './data/survey.js';
-import SurveyComponent from './components/SurveyComponent';
+import SurveyComponent from './Components/SurveyComponent';
 import logo from './assets/logo.jpg';
 import './App.scss';
 
