@@ -2,8 +2,7 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import jsSHA from 'jssha';
 import * as Survey from 'survey-react';
-// import SURVEY_DATA from './data/survey.js';
-import SURVEY_DATA from './data/demoSurvey.js';
+import SURVEY_DATA from './data/survey.js';
 import SurveyComponent from './Components/SurveyComponent';
 import './App.scss';
 

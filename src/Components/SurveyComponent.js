@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import DemographicSurveyComponent from './DemographicSurveyComponent';
+import DEMOGRAPHIC_SURVEY_DATA from '../data/demoSurvey';
 
 const myCss = {
     navigationButton: 'btn-nav',
@@ -49,7 +51,8 @@ function SurveyComponent({ surveyModel, version }) {
                     onComplete={handleComplete}
                 />
             ) : (
-                <Outcome type={outcome} />
+                ((<Outcome type={outcome} />),
+                (<DemographicSurveyComponent surveyModel={DEMOGRAPHIC_SURVEY_DATA} />))
             )}
             <button onClick={reset} className="btn-nav">
                 Reset
