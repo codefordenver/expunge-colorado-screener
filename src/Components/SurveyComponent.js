@@ -10,8 +10,10 @@ const myCss = {
 
 function SurveyComponent({ surveyModel, version }) {
     const [cache, setCache] = useLocalStorage('surveyCache', null);
-    const [page, setPage] = useState(1);
     const [outcome, setOutcome] = useState('');
+
+    const [page, setPage] = useState(1);
+    const percentProgress = (page / surveyModel.pageCount) * 100;
 
     useEffect(() => {
         if (cache?.version === version) {
@@ -43,8 +45,6 @@ function SurveyComponent({ surveyModel, version }) {
         setOutcome(null);
         setPage(1);
     }
-
-    const percentProgress = (page / surveyModel.pageCount) * 100;
 
     return (
         <div className="main">
