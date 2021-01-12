@@ -4,6 +4,8 @@ import useLocalStorage from '../hooks/useLocalStorage';
 import DemographicSurveyComponent from './DemographicSurveyComponent';
 import DEMOGRAPHIC_SURVEY_DATA from '../data/demoSurvey';
 
+const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_DATA);
+
 const myCss = {
     navigationButton: 'btn-nav',
     header: 'header',
@@ -51,8 +53,7 @@ function SurveyComponent({ surveyModel, version }) {
                     onComplete={handleComplete}
                 />
             ) : (
-                ((<Outcome type={outcome} />),
-                (<DemographicSurveyComponent surveyModel={DEMOGRAPHIC_SURVEY_DATA} />))
+                <Outcome type={outcome} />
             )}
             <button onClick={reset} className="btn-nav">
                 Reset
@@ -68,6 +69,7 @@ const Outcome = ({ type }) => {
                 <div>
                     <h2>You are eligible!</h2>
                     <div>blah blah blah</div>
+                    <DemographicSurveyComponent surveyModel={demoSurveyModel} />
                 </div>
             );
         case 'needInfo':
@@ -75,6 +77,7 @@ const Outcome = ({ type }) => {
                 <div>
                     <h2>Need more info</h2>
                     <div>go here ask this ....</div>
+                    <DemographicSurveyComponent surveyModel={demoSurveyModel} />
                 </div>
             );
         case 'ineligible':
@@ -82,6 +85,7 @@ const Outcome = ({ type }) => {
                 <div>
                     <h2>Sorry not eligible</h2>
                     <div>here are resources</div>
+                    <DemographicSurveyComponent surveyModel={demoSurveyModel} />
                 </div>
             );
         default:

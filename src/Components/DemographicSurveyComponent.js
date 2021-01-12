@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import * as Survey from 'survey-react';
 
 const myCss = {
@@ -8,23 +8,16 @@ const myCss = {
 };
 
 function DemographicSurveyComponent({ surveyModel }) {
-    const [outcome, setOutcome] = useState('');
+    const [results, setResults] = useState('');
 
     function handleComplete(survey) {
-        setOutcome(survey.data.outcome);
-    }
-
-    /* TODO/fix: if this is called *after* completing the survey,
-       it resets everything except for question visibility on page 0
-       (but corrects itself as soon as you try to select something) */
-    function reset() {
-        surveyModel.clear();
-        setOutcome(null);
+        console.log(survey.data);
+        setResults(survey.data);
     }
 
     return (
         <div>
-            {!outcome ? (
+            {!results ? (
                 <Survey.Survey
                     css={myCss}
                     model={surveyModel}
@@ -33,9 +26,6 @@ function DemographicSurveyComponent({ surveyModel }) {
             ) : (
                 'Thank you for providing the additional demographic information.'
             )}
-            <button onClick={reset} className="btn-nav">
-                Reset
-            </button>
         </div>
     );
 }
