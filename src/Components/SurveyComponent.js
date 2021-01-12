@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
+import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 const myCss = {
@@ -23,7 +24,9 @@ function SurveyComponent({ surveyModel, version }) {
 
     function handleComplete(survey) {
         setOutcome(survey.data.outcome);
-        setCache(null);
+        const uuid = uuidv4();
+        // TODO: send data along with uuid
+        setCache({ uuid });
     }
 
     function persistDataToLocalStorage({ currentPageNo, data }) {
