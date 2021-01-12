@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600&display=swap');
 
+$gold: #febd59;
+$lightgray: #eee;
 $color-pale-purple: rgb(162, 139, 184);
 $color-dark-purple: rgb(133, 77, 185);
 
@@ -11,9 +13,41 @@ $color-dark-purple: rgb(133, 77, 185);
     font-family: 'Quicksand', sans-serif;
 }
 
+h1 {
+    font-size: 1.75em;
+    font-weight: 600;
+    margin-top: 0;
+}
+
 .logo {
     width: 150px;
 }
+
+.main {
+    width: 80%;
+}
+
+.progress-container {
+    position: relative;
+    width: 100%;
+}
+
+.progress-background {
+    border-radius: 10px;
+    height: 3px;
+    width: 100%;
+    background-color: $lightgray;
+    margin: 1em 0;
+}
+
+.progress-value {
+    position: absolute;
+    border-radius: 10px;
+    height: 3px;
+    background-color: $gold;
+}
+
+// for SurveyJS
 
 .btn-nav {
     background-color: $color-pale-purple;
@@ -34,11 +68,4 @@ div.container {
     background-color: lightblue;
     padding-bottom: 1em;
     margin-bottom: 2em;
-}
-
-h1 {
-    font-size: 1.75em;
-    font-weight: 600;
-    margin-top: 0;
-    margin-bottom: 1em;
 }

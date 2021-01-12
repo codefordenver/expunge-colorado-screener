@@ -10,23 +10,27 @@ const myCss = {
 
 function SurveyComponent({ surveyModel, version }) {
     const [cache, setCache] = useLocalStorage('surveyCache', null);
+    const [page, setPage] = useState(1);
     const [outcome, setOutcome] = useState('');
 
     useEffect(() => {
         if (cache?.version === version) {
             surveyModel.data = cache.data;
             surveyModel.currentPageNo = cache.currentPageNo;
+            setPage(cache.currentPageNo + 1);
         } else {
             setCache({ version });
         }
     }, []);
 
     function handleComplete(survey) {
+        setPage(surveyModel.pageCount);
         setOutcome(survey.data.outcome);
         setCache(null);
     }
 
-    function persistDataToLocalStorage({ currentPageNo, data }) {
+    function handleValueChanged({ currentPageNo, data }) {
+        setPage(currentPageNo + 1);
         setCache({ ...cache, currentPageNo, data });
     }
 
@@ -37,17 +41,23 @@ function SurveyComponent({ surveyModel, version }) {
         surveyModel.clear();
         setCache(null);
         setOutcome(null);
+        setPage(1);
     }
 
+    const percentProgress = (page / surveyModel.pageCount) * 100;
+
     return (
-        <div>
+        <div className="main">
             {!outcome ? (
-                <Survey.Survey
-                    css={myCss}
-                    model={surveyModel}
-                    onValueChanged={persistDataToLocalStorage}
-                    onComplete={handleComplete}
-                />
+                <>
+                    <ProgressBar percent={percentProgress} />
+                    <Survey.Survey
+                        css={myCss}
+                        model={surveyModel}
+                        onValueChanged={handleValueChanged}
+                        onComplete={handleComplete}
+                    />
+                </>
             ) : (
                 <Outcome type={outcome} />
             )}
@@ -57,6 +67,15 @@ function SurveyComponent({ surveyModel, version }) {
         </div>
     );
 }
+
+const ProgressBar = ({ percent }) => {
+    return (
+        <div className="progress-container">
+            <div className="progress-value" style={{ width: `${percent}%` }}></div>
+            <div className="progress-background"></div>
+        </div>
+    );
+};
 
 const Outcome = ({ type }) => {
     switch (type) {

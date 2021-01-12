@@ -22,9 +22,7 @@ export default () => {
             <div className="app">
                 <img src={logo} className="logo" />
                 <h1>Record seal eligibility screener</h1>
-                <div className="center-me">
-                    <SurveyComponent surveyModel={surveyModel} version={hash} />
-                </div>
+                <SurveyComponent surveyModel={surveyModel} version={hash} />
             </div>
         </React.StrictMode>
     );
