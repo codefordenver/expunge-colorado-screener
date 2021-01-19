@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
+import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorage';
+import OutcomeComponent from './OutcomeComponent';
 
 const myCss = {
     navigationButton: 'btn-nav',
@@ -28,7 +30,9 @@ function SurveyComponent({ surveyModel, version }) {
     function handleComplete(survey) {
         setPage(surveyModel.pageCount);
         setOutcome(survey.data.outcome);
-        setCache(null);
+        const uuid = uuidv4();
+        // TODO: send data along with uuid
+        setCache({ uuid });
     }
 
     function handleValueChanged({ currentPageNo, data }) {
@@ -59,7 +63,7 @@ function SurveyComponent({ surveyModel, version }) {
                     />
                 </>
             ) : (
-                <Outcome type={outcome} />
+                <OutcomeComponent type={outcome} />
             )}
             <button onClick={reset} className="btn-nav">
                 Reset
@@ -75,34 +79,6 @@ const ProgressBar = ({ percent }) => {
             <div className="progress-background"></div>
         </div>
     );
-};
-
-const Outcome = ({ type }) => {
-    switch (type) {
-        case 'eligible':
-            return (
-                <div>
-                    <h2>You are eligible!</h2>
-                    <div>blah blah blah</div>
-                </div>
-            );
-        case 'needInfo':
-            return (
-                <div>
-                    <h2>Need more info</h2>
-                    <div>go here ask this ....</div>
-                </div>
-            );
-        case 'ineligible':
-            return (
-                <div>
-                    <h2>Sorry not eligible</h2>
-                    <div>here are resources</div>
-                </div>
-            );
-        default:
-            return null;
-    }
 };
 
 export default SurveyComponent;
