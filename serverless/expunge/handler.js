@@ -70,7 +70,7 @@ async function createUpdateResult(body,queryParams) {
         return {
             headers,
             statusCode: 200,
-            body: body.order
+            body: body.uuid
         }
 
     } catch(ex){

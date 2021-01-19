@@ -33,8 +33,10 @@
     ]
   },
   "devDependencies": {
+    "aws-sdk": "^2.829.0",
     "gh-pages": "^3.1.0",
     "husky": "^4.3.5",
+    "mocha": "^8.2.1",
     "prettier": "^2.2.1",
     "pretty-quick": "^3.1.0"
   }
