@@ -4,6 +4,7 @@ import jsSHA from 'jssha';
 import * as Survey from 'survey-react';
 import SURVEY_DATA from './data/survey.js';
 import SurveyComponent from './Components/SurveyComponent';
+import logo from './assets/logo.jpg';
 import './App.scss';
 
 const surveyModel = new Survey.Model(SURVEY_DATA);
@@ -19,10 +20,9 @@ const hash = shaObj.getHash('HEX');
 ReactDOM.render(
     <React.StrictMode>
         <div className="app">
-            <h1>Expunge Colorado Screener</h1>
-            <div className="center-me">
-                <SurveyComponent surveyModel={surveyModel} version={hash} />
-            </div>
+            <img src={logo} className="logo" />
+            <h1>Record seal eligibility screener</h1>
+            <SurveyComponent surveyModel={surveyModel} version={hash} />
         </div>
     </React.StrictMode>,
     document.getElementById('root')
