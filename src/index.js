@@ -3,7 +3,7 @@ import React from 'react';
 import jsSHA from 'jssha';
 import * as Survey from 'survey-react';
 import SURVEY_DATA from './data/survey.js';
-import SurveyComponent from './Components/SurveyComponent';
+import ScreenerSurvey from './Components/ScreenerSurvey';
 import logo from './assets/logo.jpg';
 import './App.scss';
 
@@ -22,7 +22,7 @@ ReactDOM.render(
         <div className="app">
             <img src={logo} className="logo" />
             <h1>Record seal eligibility screener</h1>
-            <SurveyComponent surveyModel={surveyModel} version={hash} />
+            <ScreenerSurvey surveyModel={surveyModel} version={hash} />
         </div>
     </React.StrictMode>,
     document.getElementById('root')

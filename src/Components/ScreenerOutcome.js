@@ -1,6 +1,6 @@
 import React from 'react';
 import * as Survey from 'survey-react';
-import DemographicSurveyComponent from './DemographicSurveyComponent';
+import DemographicSurvey from './DemographicSurvey';
 import DEMOGRAPHIC_SURVEY_DATA from '../data/demoSurvey';
 
 const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_DATA);
@@ -30,7 +30,7 @@ const OutcomeComponent = ({ type }) => {
     return (
         <div>
             {outcomeContent[type]}
-            <DemographicSurveyComponent surveyModel={demoSurveyModel} />
+            <DemographicSurvey surveyModel={demoSurveyModel} />
         </div>
     );
 };
