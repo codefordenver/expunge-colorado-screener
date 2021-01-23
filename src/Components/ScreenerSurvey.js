@@ -52,7 +52,9 @@ function ScreenerSurvey({ surveyModel, version }) {
 
     return (
         <div className="main">
-            {!outcome ? (
+            {outcome ? (
+                <ScreenerOutcome type={outcome} />
+            ) : (
                 <>
                     <ProgressBar percent={percentProgress} />
                     <Survey.Survey
@@ -62,8 +64,6 @@ function ScreenerSurvey({ surveyModel, version }) {
                         onComplete={handleComplete}
                     />
                 </>
-            ) : (
-                <ScreenerOutcome type={outcome} />
             )}
             <button onClick={reset} className="btn-nav">
                 Reset
