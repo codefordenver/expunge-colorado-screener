@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
 import { v4 as uuidv4 } from 'uuid';
 import useLocalStorage from '../hooks/useLocalStorage';
-import OutcomeComponent from './OutcomeComponent';
+import ScreenerOutcome from './ScreenerOutcome';
 
 const myCss = {
     navigationButton: 'btn-nav',
@@ -10,7 +10,7 @@ const myCss = {
     container: 'container',
 };
 
-function SurveyComponent({ surveyModel, version }) {
+function ScreenerSurvey({ surveyModel, version }) {
     const [cache, setCache] = useLocalStorage('surveyCache', null);
     const [outcome, setOutcome] = useState('');
 
@@ -52,7 +52,9 @@ function SurveyComponent({ surveyModel, version }) {
 
     return (
         <div className="main">
-            {!outcome ? (
+            {outcome ? (
+                <ScreenerOutcome type={outcome} />
+            ) : (
                 <>
                     <ProgressBar percent={percentProgress} />
                     <Survey.Survey
@@ -62,8 +64,6 @@ function SurveyComponent({ surveyModel, version }) {
                         onComplete={handleComplete}
                     />
                 </>
-            ) : (
-                <OutcomeComponent type={outcome} />
             )}
             <button onClick={reset} className="btn-nav">
                 Reset
@@ -81,4 +81,4 @@ const ProgressBar = ({ percent }) => {
     );
 };
 
-export default SurveyComponent;
+export default ScreenerSurvey;

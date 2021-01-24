@@ -1,9 +1,9 @@
 import React from 'react';
 import * as Survey from 'survey-react';
-import DemographicSurveyComponent from './DemographicSurveyComponent';
-import DEMOGRAPHIC_SURVEY_DATA from '../data/demoSurvey';
+import DemographicSurvey from './DemographicSurvey';
+import DEMOGRAPHIC_SURVEY_MODEL from '../data/demographicModel';
 
-const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_DATA);
+const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
 
 const outcomeContent = {
     eligible: (
@@ -30,7 +30,7 @@ const OutcomeComponent = ({ type }) => {
     return (
         <div>
             {outcomeContent[type]}
-            <DemographicSurveyComponent surveyModel={demoSurveyModel} />
+            <DemographicSurvey surveyModel={demoSurveyModel} />
         </div>
     );
 };

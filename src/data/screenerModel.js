@@ -56,7 +56,7 @@ function chargeEligibility(params) {
 Survey.FunctionFactory.Instance.register('hasEnoughTimePassed', hasEnoughTimePassed);
 Survey.FunctionFactory.Instance.register('chargeEligibility', chargeEligibility);
 
-const SURVEY_DATA = {
+const SCREENER_SURVEY_MODEL = {
     title: 'Tell us some more about your case.',
     clearInvisibleValues: 'onHidden',
     triggers: [
@@ -233,4 +233,4 @@ const SURVEY_DATA = {
     ],
 };
 
-export default SURVEY_DATA;
+export default SCREENER_SURVEY_MODEL;
