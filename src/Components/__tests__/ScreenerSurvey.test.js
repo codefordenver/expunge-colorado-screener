@@ -4,7 +4,7 @@ import React from 'react';
 import SCREENER_SURVEY_MODEL from '../../data/screenerModel';
 import ScreenerSurvey from '../ScreenerSurvey';
 import jsSHA from 'jssha';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 const setupSurveyParams = () => {
     const surveyModel = new Survey.Model(SCREENER_SURVEY_MODEL);
@@ -15,6 +15,6 @@ const setupSurveyParams = () => {
 };
 
 it('renders without crashing', () => {
-    const [surveyModel, hash] = setupSurveyParams();
-    shallow(<ScreenerSurvey surveyModel={surveyModel} hash={hash} />);
+    const [surveyModel, version] = setupSurveyParams();
+    render(<ScreenerSurvey surveyModel={surveyModel} version={version} />);
 });

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
-import { v4 as uuidv4 } from 'uuid';
-import useLocalStorage from '../hooks/useLocalStorage';
+
+import React, { useEffect, useState } from 'react';
+
 import ScreenerOutcome from './ScreenerOutcome';
+import useLocalStorage from '../hooks/useLocalStorage';
+import { v4 as uuidv4 } from 'uuid';
 
 const myCss = {
     navigationButton: 'btn-nav',

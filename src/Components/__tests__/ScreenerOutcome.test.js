@@ -1,7 +1,7 @@
 import React from 'react';
 import ScreenerOutcome from '../ScreenerOutcome';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
 
 it('renders without crashing', () => {
-    shallow(<ScreenerOutcome type={''} />);
+    render(<ScreenerOutcome type={''} />);
 });
