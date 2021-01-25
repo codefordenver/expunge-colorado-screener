@@ -1,7 +1,8 @@
-import React from 'react';
 import * as Survey from 'survey-react';
-import DemographicSurvey from './DemographicSurvey';
+
 import DEMOGRAPHIC_SURVEY_MODEL from '../data/demographicModel';
+import DemographicSurvey from './DemographicSurvey';
+import React from 'react';
 
 const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
 
@@ -26,7 +27,7 @@ const outcomeContent = {
     ),
 };
 
-const OutcomeComponent = ({ type }) => {
+const ScreenerOutcome = ({ type }) => {
     return (
         <div>
             {outcomeContent[type]}
@@ -34,4 +35,4 @@ const OutcomeComponent = ({ type }) => {
         </div>
     );
 };
-export default OutcomeComponent;
+export default ScreenerOutcome;
