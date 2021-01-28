@@ -67,9 +67,15 @@ function ScreenerSurvey({ surveyModel, version }) {
                     />
                 </>
             )}
-            <button onClick={reset} className="btn-nav">
+            {/* <button onClick={reset} className="btn-nav">
                 Reset
-            </button>
+            </button> */}
+
+            <div style={{ 'text-align': 'center' }}>
+                <button onClick={reset} className="btn-nav">
+                    Reset
+                </button>
+            </div>
         </div>
     );
 }
