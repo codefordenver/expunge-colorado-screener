@@ -2,8 +2,9 @@
 
 $gold: #febd59;
 $lightgray: #eee;
-$color-pale-purple: rgb(162, 139, 184);
-$color-dark-purple: rgb(133, 77, 185);
+$black: rgb(27, 27, 27);
+$greyblack: rgb(22, 22, 22);
+$white: rgb(247, 247, 247);
 
 body {
     font-family: 'Quicksand', sans-serif;
@@ -41,6 +42,9 @@ h5 {
 
 .main {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .progress-container {
@@ -67,23 +71,41 @@ h5 {
 // for SurveyJS elements
 
 .btn-nav {
-    background-color: $color-pale-purple;
-    border-radius: 5px;
-    border-width: 1px;
-    color: lightblue;
+    font-family: Oswald, arial, sans-serif;
+    border-radius: 48px;
+    border-width: 2px;
+    border-color: $black;
+    color: $black;
+    background-color: transparent;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    transition-property: background-color;
+    text-transform: uppercase;
+    min-height: 48px;
+    padding-right: 40px;
+    padding-left: 40px;
+    display: inline-flex;
+    text-align: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    position: relative;
+    letter-spacing: 2px;
+    align-items: center;
+    margin-top: 1em;
 }
 
 .btn-nav:hover {
-    background-color: $color-dark-purple;
-}
-
-div.header {
-    color: $color-pale-purple;
+    background-color: $greyblack;
+    color: $white;
 }
 
 div.container {
     width: 100%;
-    background-color: lightblue;
     padding-bottom: 1em;
     margin-bottom: 2em;
+    border: solid;
+    border-width: 3px;
+    border-radius: 28px;
+    border-color: $black;
 }
