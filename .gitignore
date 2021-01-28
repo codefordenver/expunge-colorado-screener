@@ -5,6 +5,7 @@ scripts/flow/*/.flowconfig
 *~
 *.pyc
 .grunt
+.eslintcache
 _SpecRunner.html
 __benchmarks__
 build/
