@@ -30,7 +30,7 @@ async function deleteResult(pathParameters) {
             }
         }
         let params = {
-            TableName: 'expunge-results',
+            TableName: 'expunge-survey-results',
             Key: {
                 uuid: pathParameters.uuid
             }
@@ -62,7 +62,7 @@ async function createUpdateResult(body,queryParams) {
             body.uuid = uuidv4();
         }
         let params = {
-            TableName: 'expunge-results',
+            TableName: 'expunge-survey-results',
             Item: body,
         }
         let result = await docClient.put(params).promise();
@@ -87,7 +87,7 @@ async function getResult(queryParams) {
   try{
       //Instead of a Scan, just do a query for specific key
       let params = {
-          TableName: 'expunge-results',
+          TableName: 'expunge-survey-results',
           Key: {
             'uuid': queryParams.uuid
           }
@@ -115,7 +115,7 @@ async function getResults(queryParams) {
     try{
         //Instead of a Scan, just do a query for specific key
         let params = {
-            TableName: 'expunge-results',
+            TableName: 'expunge-survey-results',
             Limit: queryParams && queryParams.limit ? queryParams.limit : 10 
         };
         if(queryParams && queryParams.lastItem){
