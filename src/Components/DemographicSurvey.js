@@ -7,7 +7,7 @@ const myCss = {
     container: 'container',
 };
 
-function DemographicSurveyComponent({ surveyModel }) {
+function DemographicSurvey({ surveyModel }) {
     const [results, setResults] = useState('');
 
     function handleComplete(survey) {
@@ -29,4 +29,4 @@ function DemographicSurveyComponent({ surveyModel }) {
     );
 }
 
-export default DemographicSurveyComponent;
+export default DemographicSurvey;

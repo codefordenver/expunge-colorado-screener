@@ -1,9 +1,10 @@
-import React from 'react';
 import * as Survey from 'survey-react';
-import DemographicSurveyComponent from './DemographicSurveyComponent';
-import DEMOGRAPHIC_SURVEY_DATA from '../data/demoSurvey';
 
-const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_DATA);
+import DEMOGRAPHIC_SURVEY_MODEL from '../data/demographicModel';
+import DemographicSurvey from './DemographicSurvey';
+import React from 'react';
+
+const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
 
 const outcomeContent = {
     eligible: (
@@ -26,12 +27,12 @@ const outcomeContent = {
     ),
 };
 
-const OutcomeComponent = ({ type }) => {
+const ScreenerOutcome = ({ type }) => {
     return (
         <div>
             {outcomeContent[type]}
-            <DemographicSurveyComponent surveyModel={demoSurveyModel} />
+            <DemographicSurvey surveyModel={demoSurveyModel} />
         </div>
     );
 };
-export default OutcomeComponent;
+export default ScreenerOutcome;

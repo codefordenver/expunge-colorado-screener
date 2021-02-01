@@ -1,6 +1,4 @@
-import * as Survey from 'survey-react';
-
-const DEMOGRAPHIC_SURVEY_DATA = {
+const DEMOGRAPHIC_SURVEY_MODEL = {
     title: 'Feel free to provide additional demographic data about yourself.',
     clearInvisibleValues: 'onHidden',
     pages: [
@@ -146,4 +144,4 @@ const DEMOGRAPHIC_SURVEY_DATA = {
     ],
 };
 
-export default DEMOGRAPHIC_SURVEY_DATA;
+export default DEMOGRAPHIC_SURVEY_MODEL;
