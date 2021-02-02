@@ -17,7 +17,7 @@ function DemographicSurvey({ surveyModel }) {
 
     async function handleComplete(survey) {
         let res = await putSurveyResult('demographic', survey.data);
-        setResults({ uuid: uuid, ...survey.data });
+        setResults({ uuid: res.data, ...survey.data });
     }
 
     return (
