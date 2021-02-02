@@ -16,13 +16,13 @@ module.exports.expunge = async (event) => {
         case 'PUT':
             return await createUpdateResult(event.body,event.queryStringParameters); //aka the CrUP function
         case 'DELETE':
-            return await deleteResult(event.pathParameters);
+            return await deleteResult(event.queryStringParameters);
     }
 };
 
-async function deleteResult(pathParameters) {
+async function deleteResult(queryParams) {
     try{
-        if(!pathParameters.uuid){
+        if(!queryParams.uuid){
             return {
                 headers,
                 statusCode: 400,
@@ -32,7 +32,8 @@ async function deleteResult(pathParameters) {
         let params = {
             TableName: 'expunge-survey-results',
             Key: {
-                uuid: pathParameters.uuid
+                uuid: queryParams.uuid,
+                type: queryParams.type
             }
         }
 
@@ -85,11 +86,12 @@ async function createUpdateResult(body,queryParams) {
 
 async function getResult(queryParams) {
   try{
-      //Instead of a Scan, just do a query for specific key
+      //Instead of a Scan, just do a query for specific key uuid, type
       let params = {
           TableName: 'expunge-survey-results',
           Key: {
-            'uuid': queryParams.uuid
+            'uuid': queryParams.uuid,
+            'type': queryParams.type
           }
       };      
       let result = await docClient.get(params).promise();

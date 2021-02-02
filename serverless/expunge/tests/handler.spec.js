@@ -24,7 +24,7 @@ describe('Expunge', function() {
     it('GET should return Expunge survey result', async function() {
         let result = await expunge({
             httpMethod: 'GET',
-            queryStringParameters: { uuid: test_uuid }
+            queryStringParameters: { uuid: test_uuid, type: 'test' }
         })
         console.log(result);
         
@@ -36,8 +36,9 @@ describe('Expunge', function() {
         //Use previously created uuid
         let result = await expunge({
             httpMethod: 'DELETE',
-            pathParameters: {
-                uuid: test_uuid
+            queryStringParameters: {
+                uuid: test_uuid,
+                type: 'test'
             }
         })
         assert(result.statusCode == 200);

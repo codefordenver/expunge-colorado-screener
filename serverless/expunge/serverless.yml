@@ -55,7 +55,7 @@ functions:
           method: PUT
           cors: true 
       - http:
-          path: /result/{uuid}
+          path: /result
           method: DELETE
           cors: true 
 
