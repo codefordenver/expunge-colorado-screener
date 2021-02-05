@@ -7,6 +7,7 @@ import logo from './assets/logo.jpg';
 import './App.scss';
 
 const surveyModel = new Survey.Model(SCREENER_SURVEY_MODEL);
+surveyModel.showPreviewBeforeComplete = 'showAnsweredQuestions';
 
 // * uncomment next line for console debugging
 // window.survey = surveyModel;
