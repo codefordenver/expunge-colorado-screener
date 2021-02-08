@@ -33,7 +33,7 @@ async function deleteResult(queryParams) {
             TableName: 'expunge-survey-results',
             Key: {
                 uuid: queryParams.uuid,
-                type: queryParams.type
+                type: queryParams
             }
         }
 

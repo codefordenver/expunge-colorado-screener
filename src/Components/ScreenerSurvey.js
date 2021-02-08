@@ -15,7 +15,7 @@ const myCss = {
 };
 
 function ScreenerSurvey({ surveyModel, version }) {
-    const [cache, setCache] = useLocalStorage('surveyCache', null);
+    const [cache, setCache] = useLocalStorage('screenerSurvey', null);
     const [outcome, setOutcome] = useState('');
 
     const [page, setPage] = useState(1);
@@ -32,10 +32,15 @@ function ScreenerSurvey({ surveyModel, version }) {
     }, []);
 
     async function handleComplete(survey) {
+        const uuid = uuidv4();
+
+        survey.data = { ...survey.data, uuid }; //asign locally created uuid
+
+        let res = await putSurveyResult('expunge-screener', survey.data);
+        //If success cache uuid, if not success cache failure?
+        setCache({ ...cache, uuid });
         setPage(surveyModel.pageCount);
         setOutcome(survey.data.outcome);
-        let res = await putSurveyResult('expunge-screener', survey.data);
-        setCache({ uuid: res.data });
     }
 
     function handleValueChanged({ currentPageNo, data }) {
