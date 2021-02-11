@@ -14,7 +14,8 @@ const myCss = {
     container: 'container',
 };
 
-function ScreenerSurvey({ surveyModel, version }) {
+function ScreenerSurvey({ surveyData, version }) {
+    const [surveyModel, setSurveyModel] = useState(new Survey.Model(surveyData));
     const [cache, setCache] = useLocalStorage('screenerSurvey', null);
     const [outcome, setOutcome] = useState('');
 
@@ -25,6 +26,7 @@ function ScreenerSurvey({ surveyModel, version }) {
         if (cache?.version === version) {
             surveyModel.data = cache.data;
             surveyModel.currentPageNo = cache.currentPageNo;
+            setSurveyModel(surveyModel);
             setPage(cache.currentPageNo + 1);
         } else {
             setCache({ version });
@@ -34,10 +36,8 @@ function ScreenerSurvey({ surveyModel, version }) {
     async function handleComplete(survey) {
         const uuid = uuidv4();
 
-        survey.data = { ...survey.data, uuid }; //asign locally created uuid
-
-        let res = await putSurveyResult('expunge-screener', survey.data);
-        //If success cache uuid, if not success cache failure?
+        const res = await putSurveyResult('expunge-screener', { ...survey.data, uuid });
+        /* TODO/error: If success cache uuid, if not success cache failure, dispaly error toast? */
         setCache({ ...cache, uuid });
         setPage(surveyModel.pageCount);
         setOutcome(survey.data.outcome);
@@ -52,7 +52,7 @@ function ScreenerSurvey({ surveyModel, version }) {
        it resets everything except for question visibility on page 0
        (but corrects itself as soon as you try to select something) */
     function reset() {
-        surveyModel.clear();
+        setSurveyModel(new Survey.Model(surveyData));
         setCache(null);
         setOutcome(null);
         setPage(1);

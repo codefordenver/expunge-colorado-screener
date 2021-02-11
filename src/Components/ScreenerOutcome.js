@@ -4,8 +4,6 @@ import DEMOGRAPHIC_SURVEY_MODEL from '../data/demographicModel';
 import DemographicSurvey from './DemographicSurvey';
 import React from 'react';
 
-const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
-
 const outcomeContent = {
     eligible: (
         <div>
@@ -28,6 +26,7 @@ const outcomeContent = {
 };
 
 const ScreenerOutcome = ({ type }) => {
+    const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
     return (
         <div>
             {outcomeContent[type]}

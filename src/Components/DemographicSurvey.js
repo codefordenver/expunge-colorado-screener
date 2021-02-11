@@ -10,28 +10,23 @@ const myCss = {
 };
 
 function DemographicSurvey({ surveyModel }) {
-    const [results, setResults] = useState('');
     const [cacheScreen, setCacheScreen] = useLocalStorage('screenerSurvey', null);
-    const [cacheDem, setCacheDem] = useLocalStorage('demographicSurvey', null);
+    let isComplete = false;
 
     async function handleComplete(survey) {
-        survey.data = { ...survey.data, uuid: cacheScreen.uuid || null };
-        let res = await putSurveyResult('demographic', survey.data);
-        setCacheDem({ ...cacheDem, uuid: cacheScreen.uuid });
-        setResults(survey.data); //is this necessary anymore?
-    }
-
-    function handleValueChanged({ currentPageNo, data }) {
-        setCacheDem({ ...cacheDem, currentPageNo, data });
+        let res = await putSurveyResult('demographic', {
+            ...survey.data,
+            uuid: cacheScreen.uuid || null,
+        });
+        isComplete = true;
     }
 
     return (
         <div>
-            {!results ? (
+            {!isComplete ? (
                 <Survey.Survey
                     css={myCss}
                     model={surveyModel}
-                    onValueChanged={handleValueChanged}
                     onComplete={handleComplete}
                 />
             ) : (
