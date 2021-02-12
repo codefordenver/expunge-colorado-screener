@@ -11,14 +11,14 @@ const myCss = {
 
 function DemographicSurvey({ surveyModel }) {
     const [cacheScreen, setCacheScreen] = useLocalStorage('screenerSurvey', null);
-    let isComplete = false;
+    const [isComplete, setIsComplete] = useState(false);
 
     async function handleComplete(survey) {
+        setIsComplete(true);
         let res = await putSurveyResult('demographic', {
             ...survey.data,
             uuid: cacheScreen.uuid || null,
         });
-        isComplete = true;
     }
 
     return (

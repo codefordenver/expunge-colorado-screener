@@ -35,12 +35,11 @@ function ScreenerSurvey({ surveyData, version }) {
 
     async function handleComplete(survey) {
         const uuid = uuidv4();
-
+        setPage(surveyModel.pageCount);
+        setOutcome(survey.data.outcome);
         const res = await putSurveyResult('expunge-screener', { ...survey.data, uuid });
         /* TODO/error: If success cache uuid, if not success cache failure, dispaly error toast? */
         setCache({ ...cache, uuid });
-        setPage(surveyModel.pageCount);
-        setOutcome(survey.data.outcome);
     }
 
     function handleValueChanged({ currentPageNo, data }) {
