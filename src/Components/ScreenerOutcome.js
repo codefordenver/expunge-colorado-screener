@@ -25,12 +25,12 @@ const outcomeContent = {
     ),
 };
 
-const ScreenerOutcome = ({ type }) => {
+const ScreenerOutcome = ({ type, uuid }) => {
     const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
     return (
         <div>
             {outcomeContent[type]}
-            <DemographicSurvey surveyModel={demoSurveyModel} />
+            <DemographicSurvey surveyModel={demoSurveyModel} uuid={uuid} />
         </div>
     );
 };

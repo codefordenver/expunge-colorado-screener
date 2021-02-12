@@ -9,15 +9,15 @@ const myCss = {
     container: 'container',
 };
 
-function DemographicSurvey({ surveyModel }) {
-    const [cacheScreen, setCacheScreen] = useLocalStorage('screenerSurvey', null);
+function DemographicSurvey({ surveyModel, uuid }) {
     const [isComplete, setIsComplete] = useState(false);
 
     async function handleComplete(survey) {
         setIsComplete(true);
+        console.log(`Fetch UUID: ${uuid}`);
         let res = await putSurveyResult('demographic', {
             ...survey.data,
-            uuid: cacheScreen.uuid || null,
+            uuid: uuid || null,
         });
     }
 

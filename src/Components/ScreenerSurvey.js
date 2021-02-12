@@ -14,8 +14,7 @@ const myCss = {
     container: 'container',
 };
 
-function ScreenerSurvey({ surveyData, version }) {
-    const [surveyModel, setSurveyModel] = useState(new Survey.Model(surveyData));
+function ScreenerSurvey({ surveyModel, version }) {
     const [cache, setCache] = useLocalStorage('screenerSurvey', null);
     const [outcome, setOutcome] = useState('');
 
@@ -23,10 +22,12 @@ function ScreenerSurvey({ surveyData, version }) {
     const percentProgress = (page / surveyModel.pageCount) * 100;
 
     useEffect(() => {
+        surveyModel.onComplete.add(handleComplete);
+        surveyModel.onValueChanged.add(handleValueChanged);
+
         if (cache?.version === version) {
             surveyModel.data = cache.data;
             surveyModel.currentPageNo = cache.currentPageNo;
-            setSurveyModel(surveyModel);
             setPage(cache.currentPageNo + 1);
         } else {
             setCache({ version });
@@ -40,6 +41,7 @@ function ScreenerSurvey({ surveyData, version }) {
         const res = await putSurveyResult('expunge-screener', { ...survey.data, uuid });
         /* TODO/error: If success cache uuid, if not success cache failure, dispaly error toast? */
         setCache({ ...cache, uuid });
+        console.log(`Set UUID: ${uuid}`);
     }
 
     function handleValueChanged({ currentPageNo, data }) {
@@ -51,7 +53,7 @@ function ScreenerSurvey({ surveyData, version }) {
        it resets everything except for question visibility on page 0
        (but corrects itself as soon as you try to select something) */
     function reset() {
-        setSurveyModel(new Survey.Model(surveyData));
+        surveyModel.clear();
         setCache(null);
         setOutcome(null);
         setPage(1);
@@ -60,23 +62,18 @@ function ScreenerSurvey({ surveyData, version }) {
     return (
         <div className="main">
             {outcome ? (
-                <ScreenerOutcome type={outcome} />
+                <ScreenerOutcome type={outcome} uuid={cache.uuid} />
             ) : (
                 <>
                     <ProgressBar percent={percentProgress} />
-                    <Survey.Survey
-                        css={myCss}
-                        model={surveyModel}
-                        onValueChanged={handleValueChanged}
-                        onComplete={handleComplete}
-                    />
+                    <Survey.Survey css={myCss} model={surveyModel} />
                 </>
             )}
             {/* <button onClick={reset} className="btn-nav">
                 Reset
             </button> */}
 
-            <div style={{ 'text-align': 'center' }}>
+            <div style={{ textAlign: 'center' }}>
                 <button onClick={reset} className="btn-nav">
                     Reset
                 </button>

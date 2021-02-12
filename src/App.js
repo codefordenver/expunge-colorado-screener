@@ -6,6 +6,7 @@ import ScreenerSurvey from './Components/ScreenerSurvey';
 import logo from './assets/logo.jpg';
 import './App.scss';
 
+const surveyModel = new Survey.Model(SCREENER_SURVEY_MODEL);
 // * uncomment next line for console debugging
 // window.survey = surveyModel;
 
@@ -20,7 +21,7 @@ export default () => {
             <div className="app">
                 <img src={logo} className="logo" />
                 <h1>Record seal eligibility screener</h1>
-                <ScreenerSurvey surveyData={SCREENER_SURVEY_MODEL} version={hash} />
+                <ScreenerSurvey surveyModel={surveyModel} version={hash} />
             </div>
         </React.StrictMode>
     );
