@@ -176,7 +176,7 @@ const SCREENER_SURVEY_MODEL = {
         },
         {
             name: 'convictionRequirements',
-            visibleIf: 'chargeEligibility({chargeToSeal}) > 0',
+            visibleIf: "{federalCase} = 'No' and chargeEligibility({chargeToSeal}) > 0",
             questions: [
                 {
                     type: 'radiogroup',
@@ -200,7 +200,7 @@ const SCREENER_SURVEY_MODEL = {
         {
             name: 'withinTimeFrame',
             visibleIf:
-                "hasEnoughTimePassed(chargeEligibility({chargeToSeal}), {enoughTimePassed}) = 'Yes'",
+                "{federalCase} = 'No' and hasEnoughTimePassed(chargeEligibility({chargeToSeal}), {enoughTimePassed}) = 'Yes'",
             questions: [
                 {
                     type: 'radiogroup',
