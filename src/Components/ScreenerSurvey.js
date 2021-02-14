@@ -4,6 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import ScreenerOutcome from './ScreenerOutcome';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { getSurveyResult, putSurveyResult } from '../api/apiSurveyService';
+
 import { v4 as uuidv4 } from 'uuid';
 
 const myCss = {
@@ -13,13 +15,16 @@ const myCss = {
 };
 
 function ScreenerSurvey({ surveyModel, version }) {
-    const [cache, setCache] = useLocalStorage('surveyCache', null);
+    const [cache, setCache] = useLocalStorage('screenerSurvey', null);
     const [outcome, setOutcome] = useState('');
 
     const [page, setPage] = useState(1);
     const percentProgress = (page / surveyModel.pageCount) * 100;
 
     useEffect(() => {
+        surveyModel.onComplete.add(handleComplete);
+        surveyModel.onValueChanged.add(handleValueChanged);
+
         if (cache?.version === version) {
             surveyModel.data = cache.data;
             surveyModel.currentPageNo = cache.currentPageNo;
@@ -29,12 +34,14 @@ function ScreenerSurvey({ surveyModel, version }) {
         }
     }, []);
 
-    function handleComplete(survey) {
+    async function handleComplete(survey) {
+        const uuid = uuidv4();
         setPage(surveyModel.pageCount);
         setOutcome(survey.data.outcome);
-        const uuid = uuidv4();
-        // TODO: send data along with uuid
-        setCache({ uuid });
+        const res = await putSurveyResult('expunge-screener', { ...survey.data, uuid });
+        /* TODO/error: If success cache uuid, if not success cache failure, dispaly error toast? */
+        setCache({ ...cache, uuid });
+        console.log(`Set UUID: ${uuid}`);
     }
 
     function handleValueChanged({ currentPageNo, data }) {
@@ -55,23 +62,18 @@ function ScreenerSurvey({ surveyModel, version }) {
     return (
         <div className="main">
             {outcome ? (
-                <ScreenerOutcome type={outcome} />
+                <ScreenerOutcome type={outcome} uuid={cache.uuid} />
             ) : (
                 <>
                     <ProgressBar percent={percentProgress} />
-                    <Survey.Survey
-                        css={myCss}
-                        model={surveyModel}
-                        onValueChanged={handleValueChanged}
-                        onComplete={handleComplete}
-                    />
+                    <Survey.Survey css={myCss} model={surveyModel} />
                 </>
             )}
             {/* <button onClick={reset} className="btn-nav">
                 Reset
             </button> */}
 
-            <div style={{ 'text-align': 'center' }}>
+            <div style={{ textAlign: 'center' }}>
                 <button onClick={reset} className="btn-nav">
                     Reset
                 </button>

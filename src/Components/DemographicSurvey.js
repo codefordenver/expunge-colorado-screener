@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import * as Survey from 'survey-react';
+import { getSurveyResult, putSurveyResult } from '../api/apiSurveyService';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const myCss = {
     navigationButton: 'btn-nav',
@@ -7,16 +9,21 @@ const myCss = {
     container: 'container',
 };
 
-function DemographicSurvey({ surveyModel }) {
-    const [results, setResults] = useState('');
+function DemographicSurvey({ surveyModel, uuid }) {
+    const [isComplete, setIsComplete] = useState(false);
 
-    function handleComplete(survey) {
-        setResults(survey.data);
+    async function handleComplete(survey) {
+        setIsComplete(true);
+        console.log(`Fetch UUID: ${uuid}`);
+        let res = await putSurveyResult('demographic', {
+            ...survey.data,
+            uuid: uuid || null,
+        });
     }
 
     return (
         <div>
-            {!results ? (
+            {!isComplete ? (
                 <Survey.Survey
                     css={myCss}
                     model={surveyModel}
