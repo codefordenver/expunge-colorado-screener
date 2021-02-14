@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/expunge-colorado-screener/static/css/main.8ec40ea7.chunk.css",
-    "main.js": "/expunge-colorado-screener/static/js/main.b0dca0a0.chunk.js",
-    "main.js.map": "/expunge-colorado-screener/static/js/main.b0dca0a0.chunk.js.map",
+    "main.js": "/expunge-colorado-screener/static/js/main.3df6429f.chunk.js",
+    "main.js.map": "/expunge-colorado-screener/static/js/main.3df6429f.chunk.js.map",
     "runtime-main.js": "/expunge-colorado-screener/static/js/runtime-main.cc75a688.js",
     "runtime-main.js.map": "/expunge-colorado-screener/static/js/runtime-main.cc75a688.js.map",
-    "static/js/2.c21525b9.chunk.js": "/expunge-colorado-screener/static/js/2.c21525b9.chunk.js",
-    "static/js/2.c21525b9.chunk.js.map": "/expunge-colorado-screener/static/js/2.c21525b9.chunk.js.map",
+    "static/js/2.78396c86.chunk.js": "/expunge-colorado-screener/static/js/2.78396c86.chunk.js",
+    "static/js/2.78396c86.chunk.js.map": "/expunge-colorado-screener/static/js/2.78396c86.chunk.js.map",
     "index.html": "/expunge-colorado-screener/index.html",
     "static/css/main.8ec40ea7.chunk.css.map": "/expunge-colorado-screener/static/css/main.8ec40ea7.chunk.css.map",
-    "static/js/2.c21525b9.chunk.js.LICENSE.txt": "/expunge-colorado-screener/static/js/2.c21525b9.chunk.js.LICENSE.txt",
+    "static/js/2.78396c86.chunk.js.LICENSE.txt": "/expunge-colorado-screener/static/js/2.78396c86.chunk.js.LICENSE.txt",
     "static/media/logo.4f81e8b6.jpg": "/expunge-colorado-screener/static/media/logo.4f81e8b6.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.cc75a688.js",
-    "static/js/2.c21525b9.chunk.js",
+    "static/js/2.78396c86.chunk.js",
     "static/css/main.8ec40ea7.chunk.css",
-    "static/js/main.b0dca0a0.chunk.js"
+    "static/js/main.3df6429f.chunk.js"
   ]
 }
