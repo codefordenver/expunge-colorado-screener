@@ -33,7 +33,7 @@ const DEMOGRAPHIC_SURVEY_MODEL = {
                         'Hispanic/Latinx',
                         'Middle Eastern or North African',
                         'Native American or Alaska Native',
-                        'Native Hawaiin or Other Pacific Islander',
+                        'Native Hawaiian or Other Pacific Islander',
                         'White',
                         'Prefer not to answer',
                     ],
@@ -125,6 +125,7 @@ const DEMOGRAPHIC_SURVEY_MODEL = {
                         'Weld',
                         'Yuma',
                         'Prefer not to answer',
+                        'N/A',
                     ],
                 },
                 {
