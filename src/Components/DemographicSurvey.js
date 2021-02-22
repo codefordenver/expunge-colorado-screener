@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import * as Survey from 'survey-react';
 import { getSurveyResult, putSurveyResult } from '../api/apiSurveyService';
-import useLocalStorage from '../hooks/useLocalStorage';
 
 const myCss = {
     navigationButton: 'btn-nav',
@@ -14,11 +13,12 @@ function DemographicSurvey({ surveyModel, uuid }) {
 
     async function handleComplete(survey) {
         setIsComplete(true);
-        console.log(`Fetch UUID: ${uuid}`);
-        let res = await putSurveyResult('demographic', {
-            ...survey.data,
-            uuid: uuid || null,
-        });
+        if (process.env.REACT_APP_DYNAMO_STORE === 'true') {
+            const res = await putSurveyResult('demographic', {
+                ...survey.data,
+                uuid: uuid || null,
+            });
+        }
     }
 
     return (
