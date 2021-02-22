@@ -13,11 +13,15 @@ Welcome to the Code for Denver - Expunge Colorado - Screener Tool team!
 ### Run app
 `yarn start`
 
+The environment variable `REACT_APP_DYNAMO_STORE` is `'false'` by default, which means survey results are not sent to Dynamo DB during local development. You can change it to `'true'` in the `.env` file if needed, but this should never be committed.
+
 ## Deploy
 
-To [Github pages](https://codefordenver.github.io/expunge-colorado-screener/)
+To [Github Pages site](https://codefordenver.github.io/expunge-colorado-screener/)
 
 `yarn run deploy`
+
+This uses the `.env.production` file where `REACT_APP_DYNAMO_STORE` is set to `'true'`, so survey results are sent to Dynamo DB from the deployed website.
 
 ## Project Background 📋
 

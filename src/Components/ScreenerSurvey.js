@@ -35,13 +35,17 @@ function ScreenerSurvey({ surveyModel, version }) {
     }, []);
 
     async function handleComplete(survey) {
-        const uuid = uuidv4();
         setPage(surveyModel.pageCount);
         setOutcome(survey.data.outcome);
-        const res = await putSurveyResult('expunge-screener', { ...survey.data, uuid });
-        /* TODO/error: If success cache uuid, if not success cache failure, dispaly error toast? */
-        setCache({ ...cache, uuid });
-        console.log(`Set UUID: ${uuid}`);
+        const uuid = uuidv4();
+        if (process.env.REACT_APP_DYNAMO_STORE === 'true') {
+            const res = await putSurveyResult('expunge-screener', {
+                ...survey.data,
+                uuid,
+            });
+            /* TODO: set up cloudwatch error logging */
+        }
+        setCache({ uuid });
     }
 
     function handleValueChanged({ currentPageNo, data }) {
@@ -49,7 +53,7 @@ function ScreenerSurvey({ surveyModel, version }) {
         setCache({ ...cache, currentPageNo, data });
     }
 
-    /* TODO/fix: if this is called *after* completing the survey,
+    /* FIXME: if this is called *after* completing the survey,
        it resets everything except for question visibility on page 0
        (but corrects itself as soon as you try to select something) */
     function reset() {
@@ -62,16 +66,13 @@ function ScreenerSurvey({ surveyModel, version }) {
     return (
         <div className="main">
             {outcome ? (
-                <ScreenerOutcome type={outcome} uuid={cache.uuid} />
+                <ScreenerOutcome type={outcome} uuid={cache?.uuid} />
             ) : (
                 <>
                     <ProgressBar percent={percentProgress} />
                     <Survey.Survey css={myCss} model={surveyModel} />
                 </>
             )}
-            {/* <button onClick={reset} className="btn-nav">
-                Reset
-            </button> */}
 
             <div style={{ textAlign: 'center' }}>
                 <button onClick={reset} className="btn-nav">
