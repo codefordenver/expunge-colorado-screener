@@ -84,6 +84,16 @@ const SCREENER_SURVEY_MODEL = {
     ],
     pages: [
         {
+            elements: [
+                {
+                    type: 'html',
+                    name: 'informational_intro',
+                    html:
+                        '<p>The following eligibility screener is for informational purposes only and is not meant to be interpreted as a definitive answer.</p>',
+                },
+            ],
+        },
+        {
             name: 'preliminaryQuestions',
             questions: [
                 {
