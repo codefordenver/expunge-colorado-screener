@@ -43,8 +43,47 @@ If you have any issues accessing the following resources, please reach out to th
 
 ## Tech Stack 💻
 
-* Front-end: React + [SurveyJS](https://surveyjs.io/) package for questions & logic.
-* Back-end: Pending completion of front-end version and client review.
+### Front-end: 
+
+* React
+* [SurveyJS](https://surveyjs.io/) package for questions & logic.
+
+### Back-end: 
+
+The Expunge Colorado Screener Tool backend uses the following tools and processes:
+
+* Serverless (the architecture):
+
+    * This screener tool uses a serverless architecture due to the low cost of AWS services for the projected usage rates and the simplicity of the backend model (survey record storage).
+
+* serverless (the service):
+
+    * This screener tool uses serverless (see serverless.com) to deploy AWS configuration changes to an AWS account.
+    * serverless allows AWS configurations to be deployed through a serverless.yml file.
+    * You must install serverless and AWS CLI on your machine in order for the command `serverless deploy` to work.
+    * Running the command `serverless deploy` from inside the folder containing the serverless.yml file will attempt to deploy any changes into AWS.
+    * The handler.js file accompanying the serverless.yml file is the lambda handler function (referenced in the functions property of serverless.yml)
+
+* AWS Lambda functions:
+
+    * AWS Lambda functions are event-driven functions that perform operations without having to manage/provision servers.
+    * One use of AWS Lambda is to process the HTTP requests from API gateway.
+        * The lambda function will listen for the appropriate httpMethod and update the AWS.DynamoDB.DocumentClient() object accordingly.
+
+* API gateway:
+
+    * AWS API gateway is being used as a web server to create HTTP endpoints (put, get) for survey completion.
+    * The reached HTTP endpoint will then trigger the associated Lambda function and update DynamoDB accordingly (through a direct integration option in AWS).
+
+* DynamoDB:
+
+    * DynamoDB allows for a simple document-based nosql database.
+    * DynamoDB is being used for survey results storage;
+    * Any new or updated survey will create a new entry in the db
+
+* Additional notes:
+
+    * In order to see the content in AWS, you will need to be in the region in which it is deployed. Please use `us-west-2`.
 
 ## Process 🔄
 
