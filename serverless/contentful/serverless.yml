@@ -59,7 +59,7 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
+  contentful:
     handler: handler.contentful
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -86,7 +86,7 @@ functions:
 #            detail:
 #              state:
 #                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
+#      - cloudwatchLog: '/aws/lambda/contentful'
 #      - cognitoUserPool:
 #          pool: MyUserPool
 #          trigger: PreSignUp
@@ -95,7 +95,7 @@ functions:
 #          priority: 1
 #          conditions:
 #            host: example.com
-#            path: /hello
+#            path: /contentful
 
 #    Define function environment variables here
 #    environment:
