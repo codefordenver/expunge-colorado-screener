@@ -21,29 +21,33 @@ service: cfd-expunge-contentful
 frameworkVersion: '2'
 
 provider:
-  name: aws
-  runtime: nodejs12.x
-  lambdaHashingVersion: 20201221
+    name: aws
+    runtime: nodejs12.x
+    lambdaHashingVersion: 20201221
 
-# you can overwrite defaults here
-#  stage: dev
-  region: us-west-2
+    # you can overwrite defaults here
+    #  stage: dev
+    region: us-west-2
 
-# you can add statements to the Lambda function's IAM Role here
-  iamRoleStatements:
-    - Effect: "Allow"
-      Action:
-        - "s3:ListBucket"
-      Resource: { "Fn::Join" : ["", ["arn:aws:s3:::", { "Ref" : "ServerlessDeploymentBucket" } ] ]  }
-    - Effect: "Allow"
-      Action:
-        - "s3:PutObject"
-      Resource:
-        Fn::Join:
-          - ""
-          - - "arn:aws:s3:::"
-            - "Ref" : "ServerlessDeploymentBucket"
-            - "/*"
+    # you can add statements to the Lambda function's IAM Role here
+    iamRoleStatements:
+        - Effect: 'Allow'
+          Action:
+              - 's3:ListBucket'
+          Resource:
+              {
+                  'Fn::Join':
+                      ['', ['arn:aws:s3:::', { 'Ref': 'ServerlessDeploymentBucket' }]],
+              }
+        - Effect: 'Allow'
+          Action:
+              - 's3:PutObject'
+          Resource:
+              Fn::Join:
+                  - ''
+                  - - 'arn:aws:s3:::'
+                    - 'Ref': 'ServerlessDeploymentBucket'
+                    - '/*'
 
 # you can define service wide environment variables here
 #  environment:
@@ -59,8 +63,8 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  contentful:
-    handler: handler.contentful
+    hello:
+        handler: handler.contentful
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
 #    Check the event documentation for details
