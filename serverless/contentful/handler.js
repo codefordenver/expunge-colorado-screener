@@ -14,6 +14,11 @@ const getOutcomes = async () => {
         const response = await client.getEntries();
         return {
             statusCode: 200,
+            headers: {
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'OPTIONS,GET',
+            },
             body: JSON.stringify(response.items, null, 2),
         };
     } catch (e) {
