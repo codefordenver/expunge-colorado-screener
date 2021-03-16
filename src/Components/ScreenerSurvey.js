@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import ScreenerOutcome from './ScreenerOutcome';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getSurveyResult, putSurveyResult } from '../api/apiSurveyService';
+import { getContent } from '../api/apiContentService';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -32,6 +33,8 @@ function ScreenerSurvey({ surveyModel, version }) {
         } else {
             setCache({ version });
         }
+
+        getContent();
     }, []);
 
     async function handleComplete(survey) {
