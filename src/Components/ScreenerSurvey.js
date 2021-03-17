@@ -12,6 +12,9 @@ const myCss = {
     navigationButton: 'btn-nav',
     header: 'header',
     container: 'container',
+    panel: {
+        footer: 'survey-footer',
+    },
 };
 
 function ScreenerSurvey({ surveyModel, version }) {
@@ -53,9 +56,6 @@ function ScreenerSurvey({ surveyModel, version }) {
         setCache({ ...cache, currentPageNo, data });
     }
 
-    /* FIXME: if this is called *after* completing the survey,
-       it resets everything except for question visibility on page 0
-       (but corrects itself as soon as you try to select something) */
     function reset() {
         surveyModel.clear();
         setCache(null);

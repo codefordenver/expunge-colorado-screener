@@ -36,10 +36,6 @@ h5 {
     line-height: 1.5;
 }
 
-.text-center {
-    text-align: center;
-}
-
 .logo {
     width: 200px;
 }
@@ -96,7 +92,7 @@ h5 {
     font-size: 12px;
     letter-spacing: 2px;
     align-items: center;
-    margin-top: 1em;
+    margin-top: 2em;
     margin-right: 1.5em !important;
 
     &:only-child {
@@ -118,4 +114,8 @@ div.container {
     border-width: 3px;
     border-radius: 16px;
     border-color: $black;
+}
+
+.survey-footer {
+    padding: 0;
 }
