@@ -22,7 +22,7 @@ export default () => {
         <React.StrictMode>
             <div className="app">
                 <img src={logo} className="logo" />
-                <h1>Record seal eligibility screener</h1>
+                <h1 className="text-center">Record seal eligibility screener</h1>
                 <ScreenerSurvey surveyModel={surveyModel} version={hash} />
             </div>
         </React.StrictMode>
