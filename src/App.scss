@@ -36,6 +36,10 @@ h5 {
     line-height: 1.5;
 }
 
+.text-center {
+    text-align: center;
+}
+
 .logo {
     width: 200px;
 }
@@ -59,13 +63,20 @@ h5 {
 
 .progress-value {
     position: absolute;
-    border-radius: 4px;
-    height: 4px;
+    border-radius: 5px;
+    height: 5px;
     background-color: $gold;
     transition: width 0.2s ease-out;
 }
 
-// for SurveyJS elements
+.outcome {
+    h2 {
+        font-weight: 600;
+    }
+    p {
+        font-size: 18px;
+    }
+}
 
 .btn-nav {
     font-family: Oswald, arial, sans-serif;
@@ -78,18 +89,19 @@ h5 {
     transition-duration: 0.3s;
     transition-property: background-color;
     text-transform: uppercase;
-    min-height: 48px;
-    padding-right: 40px;
-    padding-left: 40px;
+    padding: 10px 20px 8px 20px;
     display: inline-flex;
     text-align: center;
-    justify-content: center;
     font-weight: 700;
-    font-size: 14px;
-    position: relative;
+    font-size: 12px;
     letter-spacing: 2px;
     align-items: center;
     margin-top: 1em;
+    margin-right: 1.5em !important;
+
+    &:only-child {
+        margin-right: 0 !important;
+    }
 }
 
 .btn-nav:hover {
@@ -99,10 +111,11 @@ h5 {
 
 div.container {
     width: 100%;
-    padding-bottom: 1em;
+    padding: 1.5em;
+    padding-top: 1em;
     margin-bottom: 2em;
     border: solid;
     border-width: 3px;
-    border-radius: 28px;
+    border-radius: 16px;
     border-color: $black;
 }
