@@ -90,7 +90,8 @@ The Expunge Colorado Screener Tool uses the following tools and processes:
     * Front-end administrative users from Expunge Colorado will sign into the Contentful platform to update the outcome page.
     * This project has a Screener Outcomes space composed of content entries for each outcome.
         * A *space* in contentful is a collection of content for achieving a particular goal. 
-        * An *entry* in contentful is a particular page of content with a Title and a Body.
+        * An *entry* in contentful is a particular page of content whose structure is based on a content model. 
+            * The Screener Outcome content model for this app was created to contain a Title, Body and ID.
 
 * @contentful/rich-text-react-renderer
     * Once the front-end application receives the contentful response, the npm package @contentful/rich-text-react-renderer will be used to process the JSON message and display the rich text to the user.
