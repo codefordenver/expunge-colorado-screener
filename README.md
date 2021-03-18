@@ -43,18 +43,15 @@ If you have any issues accessing the following resources, please reach out to th
 
 ## Tech Stack 💻
 
-### Front-end: 
+The Expunge Colorado Screener Tool uses the following tools and processes:
 
-* React
-* [SurveyJS](https://surveyjs.io/) package for questions & logic.
+* yarn
 
-### Back-end: 
-
-The Expunge Colorado Screener Tool backend uses the following tools and processes:
+    * This project uses yarn as the package manager for this application.
 
 * Serverless (the architecture):
 
-    * This screener tool uses a serverless architecture due to the low cost of AWS services for the projected usage rates and the simplicity of the backend model (survey record storage).
+    * This screener tool uses a serverless backend architecture due to the low cost of AWS services for the projected usage rates and the simplicity of the backend model (survey record storage).
 
 * serverless (the service):
 
@@ -64,16 +61,17 @@ The Expunge Colorado Screener Tool backend uses the following tools and processe
     * Running the command `serverless deploy` from inside the folder containing the serverless.yml file will attempt to deploy any changes into AWS.
     * The handler.js file accompanying the serverless.yml file is the lambda handler function (referenced in the functions property of serverless.yml)
 
+* API gateway:
+
+    * AWS API gateway is being used as a web server to create HTTP endpoints for survey record storage (backend) and outcome page content retrieval (frontend).
+    * The reached HTTP endpoints upon survey completion will then trigger the associated Lambda functions through a direct integration in the AWS console.
+
 * AWS Lambda functions:
 
     * AWS Lambda functions are event-driven functions that perform operations without having to manage/provision servers.
-    * One use of AWS Lambda is to process the HTTP requests from API gateway.
-        * The lambda function will listen for the appropriate httpMethod and update the AWS.DynamoDB.DocumentClient() object accordingly.
-
-* API gateway:
-
-    * AWS API gateway is being used as a web server to create HTTP endpoints (put, get) for survey completion.
-    * The reached HTTP endpoint will then trigger the associated Lambda function and update DynamoDB accordingly (through a direct integration option in AWS).
+    * This application uses AWS Lambda to process the HTTP requests from API gateway.
+        * For the backend survey record storage, the expunge lambda function will check the appropriate httpMethod and update DynamoDB accordingly.
+        * For the frontend content rendering, the contentful lambda function will then make an API call to the expunge contentful account and send the rich text content as JSON back to the front-end application.
 
 * DynamoDB:
 
@@ -81,10 +79,27 @@ The Expunge Colorado Screener Tool backend uses the following tools and processe
     * DynamoDB is being used for survey results storage;
     * Any new or updated survey will create a new entry in the db
 
+* Headless CMS
+
+    * A Headless CMS provides the ability for the content of a website or page to be created and stored in a location that does not directly update a website's UI, but instead can be accessed via an API to then render in customizable ways.
+    * This tool uses a Headless CMS for the survey outcome page in order to provide the Expunge Colorado team with the ability to customize this page easily.
+
+* contentful
+
+    * contentful was the Headless CMS service chosen for this project due to its low cost, ease of rich text formatting/updating for non-dev users and integration capabilities with react.
+    * Front-end administrative users from Expunge Colorado will sign into the Contentful platform to update the outcome page.
+    * This project has a Screener Outcomes space composed of content entries for each outcome.
+        * A *space* in contentful is a collection of content for achieving a particular goal. 
+        * An *entry* in contentful is a particular page of content whose structure is based on a content model. 
+            * The Screener Outcome content model for the outcome entries was created to contain a Title, Body and ID.
+
+* @contentful/rich-text-react-renderer
+
+    * Once the front-end application receives the contentful response, the npm package @contentful/rich-text-react-renderer will be used to process the JSON message and display the rich text to the user.
+
 * Additional notes:
 
     * In order to see the content in AWS, you will need to be in the region in which it is deployed. Please use `us-west-2`.
-
 ## Process 🔄
 
 * Please reach out to the team in order to express interest in this work.
