@@ -94,6 +94,7 @@ The Expunge Colorado Screener Tool uses the following tools and processes:
             * The Screener Outcome content model for this app was created to contain a Title, Body and ID.
 
 * @contentful/rich-text-react-renderer
+
     * Once the front-end application receives the contentful response, the npm package @contentful/rich-text-react-renderer will be used to process the JSON message and display the rich text to the user.
 
 * Additional notes:
