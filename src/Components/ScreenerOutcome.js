@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as Survey from 'survey-react';
+import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import DEMOGRAPHIC_SURVEY_MODEL from '../data/demographicModel';
@@ -36,7 +37,8 @@ const ScreenerOutcome = ({ type, uuid }) => {
             <div className="container outcome">
                 <h2>{titleMap[type]}</h2>
                 {loading && 'Loading more info...'}
-                {content && documentToReactComponents(content.body)}
+                {content &&
+                    documentToReactComponents(content.body, richTextRenderOptions)}
                 {error && (
                     <h4>
                         Unable to load additional information. Please contact us at{' '}
@@ -50,3 +52,12 @@ const ScreenerOutcome = ({ type, uuid }) => {
 };
 
 export default ScreenerOutcome;
+
+const richTextRenderOptions = {
+    renderNode: {
+        [BLOCKS.EMBEDDED_ASSET]: (node) => {
+            const { file } = node.data.target.fields;
+            return <img src={file.url} />;
+        },
+    },
+};
