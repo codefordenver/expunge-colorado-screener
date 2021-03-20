@@ -5,7 +5,6 @@ import React, { useEffect, useState } from 'react';
 import ScreenerOutcome from './ScreenerOutcome';
 import useLocalStorage from '../hooks/useLocalStorage';
 import { getSurveyResult, putSurveyResult } from '../api/apiSurveyService';
-import { getContent } from '../api/apiContentService';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -13,6 +12,9 @@ const myCss = {
     navigationButton: 'btn-nav',
     header: 'header',
     container: 'container',
+    panel: {
+        footer: 'survey-footer',
+    },
 };
 
 function ScreenerSurvey({ surveyModel, version }) {
@@ -33,8 +35,6 @@ function ScreenerSurvey({ surveyModel, version }) {
         } else {
             setCache({ version });
         }
-
-        getContent();
     }, []);
 
     async function handleComplete(survey) {
@@ -56,9 +56,6 @@ function ScreenerSurvey({ surveyModel, version }) {
         setCache({ ...cache, currentPageNo, data });
     }
 
-    /* FIXME: if this is called *after* completing the survey,
-       it resets everything except for question visibility on page 0
-       (but corrects itself as soon as you try to select something) */
     function reset() {
         surveyModel.clear();
         setCache(null);
@@ -77,7 +74,7 @@ function ScreenerSurvey({ surveyModel, version }) {
                 </>
             )}
 
-            <div style={{ textAlign: 'center' }}>
+            <div className="text-center">
                 <button onClick={reset} className="btn-nav">
                     Reset
                 </button>
