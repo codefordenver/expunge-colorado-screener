@@ -3,7 +3,7 @@ import jsSHA from 'jssha';
 import * as Survey from 'survey-react';
 import SCREENER_SURVEY_MODEL from './data/screenerModel.js';
 import ScreenerSurvey from './Components/ScreenerSurvey';
-import logo from './assets/logo.jpg';
+import logo from './assets/logo.png';
 import './App.scss';
 
 const surveyModel = new Survey.Model(SCREENER_SURVEY_MODEL);
