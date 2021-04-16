@@ -32,18 +32,26 @@ const ScreenerOutcome = ({ type, uuid }) => {
         }
     }, []);
 
+    console.log(content);
+
     return (
         <div>
             <div className="container outcome">
-                <h2>{titleMap[type]}</h2>
                 {loading && 'Loading more info...'}
-                {content &&
-                    documentToReactComponents(content.body, richTextRenderOptions)}
+                {content && (
+                    <>
+                        <h2>{content.title}</h2>
+                        {documentToReactComponents(content.body, richTextRenderOptions)}
+                    </>
+                )}
                 {error && (
-                    <h4>
-                        Unable to load additional information. Please contact us at{' '}
-                        <a href="https://expungecolorado.org">expungecolorado.org</a>
-                    </h4>
+                    <>
+                        <h2>{titleMap[type]}</h2>
+                        <h4>
+                            Unable to load additional information. Please contact us at{' '}
+                            <a href="https://expungecolorado.org">expungecolorado.org</a>
+                        </h4>
+                    </>
                 )}
             </div>
             <DemographicSurvey surveyModel={demoSurveyModel} uuid={uuid} />
