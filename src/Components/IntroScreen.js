@@ -4,6 +4,11 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 
 import { getContent } from '../api/apiContentService';
 
+{
+    /* <h2>{content.title}</h2>
+                         {documentToReactComponents(content.body, richTextRenderOptions)} */
+}
+
 const IntroScreen = ({ setScreenerStarted }) => {
     return (
         <div className="container">
