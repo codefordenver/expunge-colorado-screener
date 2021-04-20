@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import jsSHA from 'jssha';
 import * as Survey from 'survey-react';
 import SCREENER_SURVEY_MODEL from './data/screenerModel.js';
 import ScreenerSurvey from './Components/ScreenerSurvey';
 import logo from './assets/logo.jpg';
 import './App.scss';
+import IntroScreen from './Components/IntroScreen.js';
 
 const surveyModel = new Survey.Model(SCREENER_SURVEY_MODEL);
 surveyModel.showPreviewBeforeComplete = 'showAnsweredQuestions';
@@ -18,12 +19,22 @@ shaObj.update(JSON.stringify(SCREENER_SURVEY_MODEL));
 const hash = shaObj.getHash('HEX');
 
 export default () => {
+    const [screenerStarted, setScreenerStarted] = useState(false);
+
     return (
         <React.StrictMode>
             <div className="app">
                 <img src={logo} className="logo" />
                 <h1 className="text-center">Record seal eligibility screener</h1>
-                <ScreenerSurvey surveyModel={surveyModel} version={hash} />
+                {screenerStarted ? (
+                    <ScreenerSurvey
+                        surveyModel={surveyModel}
+                        version={hash}
+                        setScreenerStarted={setScreenerStarted}
+                    />
+                ) : (
+                    <IntroScreen setScreenerStarted={setScreenerStarted} />
+                )}
             </div>
         </React.StrictMode>
     );

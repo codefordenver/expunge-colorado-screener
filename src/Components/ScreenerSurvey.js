@@ -17,7 +17,7 @@ const myCss = {
     },
 };
 
-function ScreenerSurvey({ surveyModel, version }) {
+function ScreenerSurvey({ surveyModel, version, setScreenerStarted }) {
     const [cache, setCache] = useLocalStorage('screenerSurvey', null);
     const [outcome, setOutcome] = useState('');
 
@@ -61,6 +61,7 @@ function ScreenerSurvey({ surveyModel, version }) {
         setCache(null);
         setOutcome(null);
         setPage(1);
+        setScreenerStarted(false);
     }
 
     return (

@@ -32,8 +32,6 @@ const ScreenerOutcome = ({ type, uuid }) => {
         }
     }, []);
 
-    console.log(content);
-
     return (
         <div>
             <div className="container outcome">
