@@ -1,21 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import { getContent } from '../api/apiContentService';
-
-{
-    /* <h2>{content.title}</h2>
-                         {documentToReactComponents(content.body, richTextRenderOptions)} */
-}
-
-const IntroScreen = ({ setScreenerStarted }) => {
+const IntroScreen = ({ setScreenerStarted, introContent }) => {
     return (
         <div className="container">
-            <h2>Tell us some more about your case.</h2>
+            <h2>{introContent.title}</h2>
             <p>
-                The following eligibility screener is for informational purposes only and
-                is not meant to be interpreted as a definitive answer.
+                {documentToReactComponents(
+                    introContent.description,
+                    richTextRenderOptions
+                )}
             </p>
             <button className="btn-nav" onClick={() => setScreenerStarted(true)}>
                 Next
@@ -25,3 +20,12 @@ const IntroScreen = ({ setScreenerStarted }) => {
 };
 
 export default IntroScreen;
+
+const richTextRenderOptions = {
+    renderNode: {
+        [BLOCKS.EMBEDDED_ASSET]: (node) => {
+            const { file } = node.data.target.fields;
+            return <img src={file.url} />;
+        },
+    },
+};
