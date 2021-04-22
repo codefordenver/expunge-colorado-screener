@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 
 import ScreenerOutcome from './ScreenerOutcome';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { getSurveyResult, putSurveyResult } from '../api/apiSurveyService';
+import { putSurveyResult } from '../api/apiSurveyService';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -78,7 +78,6 @@ function ScreenerSurvey({ surveyModel, version, setScreenerStarted, outcomeConte
         <div className="main">
             {outcome ? (
                 <ScreenerOutcome
-                    type={outcome}
                     uuid={cache?.uuid}
                     outcomeContent={filteredOutcomeContent}
                     loading={loading}

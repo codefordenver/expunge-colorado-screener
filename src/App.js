@@ -6,6 +6,7 @@ import ScreenerSurvey from './Components/ScreenerSurvey';
 import logo from './assets/logo.png';
 import './App.scss';
 import IntroScreen from './Components/IntroScreen.js';
+import { getContent } from './api/apiContentService';
 
 const surveyModel = new Survey.Model(SCREENER_SURVEY_MODEL);
 surveyModel.showPreviewBeforeComplete = 'showAnsweredQuestions';
@@ -17,7 +18,6 @@ const shaObj = new jsSHA('SHA-1', 'TEXT');
 // this creates a hash from the stringified survey model so we can version it (know if it changed)
 shaObj.update(JSON.stringify(SCREENER_SURVEY_MODEL));
 const hash = shaObj.getHash('HEX');
-import { getContent } from './api/apiContentService';
 
 export default () => {
     const [screenerStarted, setScreenerStarted] = useState(false);

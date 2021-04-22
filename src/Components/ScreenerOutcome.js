@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import * as Survey from 'survey-react';
 import { BLOCKS } from '@contentful/rich-text-types';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
@@ -6,7 +6,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import DEMOGRAPHIC_SURVEY_MODEL from '../data/demographicModel';
 import DemographicSurvey from './DemographicSurvey';
 
-const ScreenerOutcome = ({ type, uuid, outcomeContent, loading }) => {
+const ScreenerOutcome = ({ uuid, outcomeContent, loading }) => {
     const demoSurveyModel = new Survey.Model(DEMOGRAPHIC_SURVEY_MODEL);
 
     return (
