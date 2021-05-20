@@ -1,0 +1,66 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: report
+# app and org for use with dashboard.serverless.com
+#app: your-app-name
+#org: your-org-name
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '2'
+
+provider:
+    name: aws
+    runtime: nodejs12.x
+    lambdaHashingVersion: 20201221
+    region: us-west-2
+    iamRoleStatements:
+        - Effect: 'Allow'
+          Action:
+              - dynamodb:Query
+              - dynamodb:Scan
+          Resource: arn:aws:dynamodb:us-west-2:061931186793:table/expunge-results
+
+package:
+    exclude:
+        - node_modules/**
+        - '!node_modules/uuid/**'
+
+functions:
+    report:
+        handler: handler.report
+        events:
+            - schedule:
+                  rate: cron(0 6 * * *)
+                  enabled: true
+
+resources:
+    Resources:
+        expungeResultTable:
+            Type: AWS::DynamoDB::Table
+            Properties:
+                TableName: expunge-survey-results
+                AttributeDefinitions:
+                    - AttributeName: uuid
+                      AttributeType: S
+                    - AttributeName: type
+                      AttributeType: S
+                KeySchema:
+                    - AttributeName: uuid
+                      KeyType: HASH
+                    - AttributeName: type
+                      KeyType: RANGE
+                ProvisionedThroughput:
+                    ReadCapacityUnits: 1
+                    WriteCapacityUnits: 1
