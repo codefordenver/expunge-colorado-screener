@@ -13,7 +13,6 @@ module.exports.report = async (event) => {
         //performing scan
         let params = {
             TableName: 'expunge-survey-results',
-            Limit: queryParams && queryParams.limit ? queryParams.limit : 10,
         };
         let result = await docClient.scan(params).promise();
         console.log('Query Success');
