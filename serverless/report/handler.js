@@ -15,9 +15,6 @@ module.exports.report = async (event) => {
             TableName: 'expunge-survey-results',
             Limit: queryParams && queryParams.limit ? queryParams.limit : 10,
         };
-        if (queryParams && queryParams.lastItem) {
-            params.ExclusiveStartKey = { order: queryParams.lastItem };
-        }
         let result = await docClient.scan(params).promise();
         console.log('Query Success');
         return {

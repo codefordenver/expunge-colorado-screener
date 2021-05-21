@@ -44,23 +44,3 @@ functions:
             - schedule:
                   rate: cron(0 6 * * *)
                   enabled: true
-
-resources:
-    Resources:
-        expungeResultTable:
-            Type: AWS::DynamoDB::Table
-            Properties:
-                TableName: expunge-survey-results
-                AttributeDefinitions:
-                    - AttributeName: uuid
-                      AttributeType: S
-                    - AttributeName: type
-                      AttributeType: S
-                KeySchema:
-                    - AttributeName: uuid
-                      KeyType: HASH
-                    - AttributeName: type
-                      KeyType: RANGE
-                ProvisionedThroughput:
-                    ReadCapacityUnits: 1
-                    WriteCapacityUnits: 1
