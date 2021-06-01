@@ -12,20 +12,20 @@ exports.handler = async (event) => {
         };
         let result = await docClient.scan(params).promise();
         console.log('Query Success');
-        let resultCsv = "initial,table,cols\r";
+        let reportCsv = "initial,table,cols\r";
         result.Items.forEach((element) => {
             // for each field, append content + ','
             // object.keys?
-            resultCsv += element.uuid + ",";
-            resultCsv += element.coloradoArrest + ",";
-            resultCsv += element.outcome + ",";
+            reportCsv += element.uuid + ",";
+            reportCsv += element.coloradoArrest + ",";
+            reportCsv += element.outcome + ",";
             // at the end of each field appending, append \r
-            resultCsv += "\r";
+            reportCsv += "\r";
         });
         console.log("this is the csv before write");
-        console.log(resultCsv);
-        // fs.writeFile resultCsv to file
-        fs.writeFile("./resultCsv.csv", resultCsv, (err) => {
+        console.log(reportCsv);
+        // fs.writeFile reportCsv to file
+        fs.writeFile("./reportCsv.csv", reportCsv, (err) => {
             if (err) {
                 console.log('this is the filewrite error');
                 console.log(err)
