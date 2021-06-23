@@ -18,37 +18,37 @@ exports.handler = async (event) => {
         };
         let result = await docClient.scan(params).promise();
         console.log('Query Success');
-        let reportCsv = `Date Submitted,Did your arrest or charge take place in Colorado?,Were you over 18 at the time of the arrest or charge?,Was your case a federal case?,"Were you arrested, but not charged & seeking to seal arrest record only?",Were all charges in your case dismissed or were you acquitted?,What conviction are you looking to seal?,Have you completed all sentencing? ,What is the month & year you completed your sentencing/supervision?,"Have you paid all restitution, fines, court costs, late fees or other fees?",Have you attempted to seal your record for this conviction within the past 12 months?,Have you been convicted of or charged with another offense after the conviction you are trying to seal?,"Outcome (eligible, ineligible, needInfo) ",Reason for expungement? ,Race/ethnic background: Asian,Race/ethnic background: Black/African American ,Race/ethnic background: Hispanic/Latinx,Race/ethnic background: Middle Eastern or North Africa,Race/ethnic background: Native American or Alaska Native,Race/ethnic background: Native Hawaiian or Other Pacific Islander,Race/ethnic background: White,Race/ethnic background: Prefer not to answer,What is your age range?,What county in Colorado did your case take place in?,Emailing list\n`;
+        let reportCsv = `Date Submitted,Did your arrest or charge take place in Colorado?,Were you over 18 at the time of the arrest or charge?,Was your case a federal case?,"Were you arrested, but not charged & seeking to seal arrest record only?",Were all charges in your case dismissed or were you acquitted?,What conviction are you looking to seal?,Have you completed all sentencing? ,What is the month & year you completed your sentencing/supervision?,"Have you paid all restitution, fines, court costs, late fees or other fees?",Have you attempted to seal your record for this conviction within the past 12 months?,Have you been convicted of or charged with another offense after the conviction you are trying to seal?,"Outcome (eligible, ineligible, needInfo) ",Reason for expungement? ,Race/ethnic background: Asian,Race/ethnic background: Black/African American ,Race/ethnic background: Hispanic/Latinx,Race/ethnic background: Middle Eastern or North Africa,Race/ethnic background: Native American or Alaska Native,Race/ethnic background: Native Hawaiian or Other Pacific Islander,Race/ethnic background: White,Race/ethnic background: Prefer not to answer,What is your age range?,What county in Colorado did your case take place in?,Emailing list,uuid\n`;
         result.Items.forEach(({coloradoArrest, over18, federalCase, sealingArrestRecordOnly, chargeDismissedOrAcquitted, chargeToSeal, completedSentencing, enoughTimePassed, paidRestitutionAndFees, attemptedToSeal, anyNewOffense, outcome, expungementReason, raceEthnicity, ageRange, countyInColorado, email, uuid}) => {
             reportCsv += dateSubmitted + ",";
             let raceEthnicityVal;
             switch (raceEthnicity) {
                 case "Asian":
-                    raceEthnicityVal = "Asian,,,,,,,,";
+                    raceEthnicityVal = "Asian,,,,,,,";
                     break;
                 case "Black/African American":
-                    raceEthnicityVal = ",Black/African American,,,,,,,";
+                    raceEthnicityVal = ",Black/African American,,,,,,";
                     break;
                 case "Hispanic/Latinx":
                     raceEthnicityVal = ",,Hispanic/Latinx";
                     break;
                 case "Middle Eastern or North Africa":
-                    raceEthnicityVal = ",,,Middle Eastern or North Africa,,,,,";
+                    raceEthnicityVal = ",,,Middle Eastern or North Africa,,,,";
                     break;
                 case "Native American or Alaska Native":
-                    raceEthnicityVal = ",,,,Native American or Alaska Native,,,,";
+                    raceEthnicityVal = ",,,,Native American or Alaska Native,,,";
                     break;
                 case "Native Hawaiian or Other Pacific Islander":
-                    raceEthnicityVal = ",,,,,Native Hawaiian or Other Pacific Islander,,,";
+                    raceEthnicityVal = ",,,,,Native Hawaiian or Other Pacific Islander,,";
                     break;
                 case "White":
-                    raceEthnicityVal = ",,,,,,White,,";
+                    raceEthnicityVal = ",,,,,,White,";
                     break;
                 case "Prefer not to answer":
-                    raceEthnicityVal = ",,,,,,,Prefer not to answer,";
+                    raceEthnicityVal = ",,,,,,,Prefer not to answer";
                     break;
                 default:
-                    raceEthnicityVal = ",,,,,,,Prefer not to answer,";
+                    raceEthnicityVal = ",,,,,,,Prefer not to answer";
             }
             let reportColVals = [coloradoArrest, over18, federalCase, sealingArrestRecordOnly, chargeDismissedOrAcquitted, chargeToSeal, completedSentencing, enoughTimePassed, paidRestitutionAndFees, attemptedToSeal, anyNewOffense, outcome, expungementReason, raceEthnicityVal, ageRange, countyInColorado, email, uuid];
             // NEED TO CONFIRM HOW TO HANDLE CHECKBOX RESPONSES (ex. expungementReason)
